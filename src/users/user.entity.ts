@@ -1,7 +1,9 @@
+import { BlogPost } from 'src/blogs/blog.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -40,6 +42,9 @@ export class User {
 
   @Column({ type: 'enum', enum: AccountStatus, default: AccountStatus.ACTIVE })
   accountStatus: AccountStatus;
+
+  @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
+  blogs: BlogPost[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
