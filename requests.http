@@ -13,8 +13,8 @@ Content-Type: application/json
 {
     "firstName": "Ernest",
     "lastName": "Wambua",
-    "email": "ernestwambua9@gmail.com",
-    "phone": "+254719286396",
+    "email": "ernestwambua4@gmail.com",
+    "phone": "+254712286396",
     "password": "password123"
 }
 
@@ -31,3 +31,17 @@ Content-Type: application/json
 
 ###
 DELETE {{BASE_URL}}/users/a74d149a-a154-4765-8a93-3074bba776c4
+
+###
+GET {{BASE_URL}}/blogs
+
+###
+POST {{BASE_URL}}/blogs
+Content-Type: application/json
+
+{
+    "title": "Lorem Ipsum",
+    "description": "lorem ipsum",
+    "content": "Lorem ipsum dolor",
+    "user": "1fe8099c-719e-49c3-bacf-bf2783963b0b"
+}

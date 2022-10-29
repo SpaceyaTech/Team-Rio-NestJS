@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  UseInterceptors,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dtos/create-blog.dto';
 import { EditBlogDto } from './dtos/edit-blog.dto';
+import { CreateBlogInterceptor } from './interceptors/create-blog.interceptor';
 
 @Controller('blogs')
 export class BlogsController {
@@ -26,7 +28,8 @@ export class BlogsController {
   }
 
   @Post()
-  createBlog(@Body() body: CreateBlogDto) {
+  @UseInterceptors(CreateBlogInterceptor)
+  createBlog(@Body() body: any) {
     return this.service.create(body);
   }
 

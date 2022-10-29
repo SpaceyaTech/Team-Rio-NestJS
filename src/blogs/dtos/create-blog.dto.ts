@@ -9,4 +9,7 @@ export class CreateBlogDto {
 
   @IsString()
   content: string;
+
+  @IsString()
+  author: string;
 }

@@ -37,11 +37,11 @@ export class User {
   @Column({ default: 'https://bit.ly/3Wgeq06' })
   avatar: string;
 
-  @Column('text')
+  @Column({ type: 'text', nullable: true })
   bio: string;
 
-  @Column({ type: 'enum', enum: AccountStatus, default: AccountStatus.ACTIVE })
-  accountStatus: AccountStatus;
+  // @Column({ type: 'enum', enum: AccountStatus, default: AccountStatus.ACTIVE })
+  // accountStatus: AccountStatus;
 
   @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
   blogs: BlogPost[];
