@@ -17,6 +17,11 @@ export class BlogsService {
     return this.repo.find();
   }
 
+  create(blog: Partial<BlogPost>) {
+    const newBlog = this.repo.create(blog);
+    return this.repo.save(newBlog);
+  }
+
   async update(id: string, attrs: Partial<BlogPost>) {
     const blog = await this.findById(id);
     Object.assign(blog, attrs);
