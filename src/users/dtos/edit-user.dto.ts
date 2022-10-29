@@ -7,9 +7,6 @@ export class EditUserDto {
   @IsString()
   lastName: string;
 
-  @IsPhoneNumber()
-  phone: string;
-
   @IsString()
   avatar: string;
 }

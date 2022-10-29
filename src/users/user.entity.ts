@@ -20,7 +20,7 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ unique: true })
   phone: string;
 
   @Column()
@@ -28,6 +28,9 @@ export class User {
 
   @Column({ default: 'https://bit.ly/3Wgeq06' })
   avatar: string;
+
+  @Column('text')
+  bio: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
