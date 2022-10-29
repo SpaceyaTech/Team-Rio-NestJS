@@ -1,0 +1,33 @@
+@BASE_URL = http://localhost:5000
+
+###
+GET {{BASE_URL}}
+
+###
+GET {{BASE_URL}}/users
+
+###
+POST {{BASE_URL}}/users
+Content-Type: application/json
+
+{
+    "firstName": "Ernest",
+    "lastName": "Wambua",
+    "email": "ernestwambua9@gmail.com",
+    "phone": "+254719286396",
+    "password": "password123"
+}
+
+###
+GET {{BASE_URL}}/users/b2994cb0-bcd3-47b2-967a-f7724acc2c0a
+
+###
+PATCH {{BASE_URL}}/users/b2994cb0-bcd3-47b2-967a-f7724acc2c0a
+Content-Type: application/json
+
+{
+    "avatar": "https://bit.ly/3Wgeq06"
+}
+
+###
+DELETE {{BASE_URL}}/users/a74d149a-a154-4765-8a93-3074bba776c4

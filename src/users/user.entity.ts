@@ -26,7 +26,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ default: 'https://bit.ly/3Wgeq06' })
   avatar: string;
 
   @CreateDateColumn({ name: 'created_at' })

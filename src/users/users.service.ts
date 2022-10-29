@@ -26,8 +26,8 @@ export class UsersService {
     return this.repo.find();
   }
 
-  create(user: Partial<User>) {
-    const existingUser = this.findByEmail(user.email);
+  async create(user: Partial<User>) {
+    const existingUser = await this.findByEmail(user.email);
     if (existingUser)
       throw new BadRequestException('User with that email already exists');
     const newUser = this.repo.create(user);

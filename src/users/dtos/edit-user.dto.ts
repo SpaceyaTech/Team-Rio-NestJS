@@ -9,4 +9,7 @@ export class EditUserDto {
 
   @IsPhoneNumber()
   phone: string;
+
+  @IsString()
+  avatar: string;
 }
