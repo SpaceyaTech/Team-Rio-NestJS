@@ -6,6 +6,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+enum AccountStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  BLOCKED = 'blocked',
+}
+
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -31,6 +37,9 @@ export class User {
 
   @Column('text')
   bio: string;
+
+  @Column({ type: 'enum', enum: AccountStatus, default: AccountStatus.ACTIVE })
+  accountStatus: AccountStatus;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
