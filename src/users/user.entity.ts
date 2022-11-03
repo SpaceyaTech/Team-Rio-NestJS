@@ -1,4 +1,5 @@
 import { BlogPost } from 'src/blogs/blog.entity';
+import { Comment } from 'src/comments/comment.entity';
 import { Role } from 'src/roles/role.entity';
 import {
   Column,
@@ -56,4 +57,7 @@ export class User {
 
   @ManyToOne(() => Role, (role) => role.users)
   role: Role;
+
+  @ManyToOne(() => Comment, (comment) => comment.user)
+  comments: Comment[];
 }

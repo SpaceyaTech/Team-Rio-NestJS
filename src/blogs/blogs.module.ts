@@ -7,6 +7,7 @@ import { UsersModule } from 'src/users/users.module';
 import { CreateBlogInterceptor } from './interceptors/create-blog.interceptor';
 
 @Module({
+  exports: [BlogsService],
   imports: [TypeOrmModule.forFeature([BlogPost]), UsersModule],
   providers: [BlogsService, CreateBlogInterceptor],
   controllers: [BlogsController],
