@@ -9,7 +9,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
-import { CreateBlogDto } from './dtos/create-blog.dto';
 import { EditBlogDto } from './dtos/edit-blog.dto';
 import { CreateBlogInterceptor } from './interceptors/create-blog.interceptor';
 
@@ -36,6 +35,11 @@ export class BlogsController {
   @Patch(':id')
   editBlog(@Param('id') id: string, @Body() body: EditBlogDto) {
     return this.service.update(id, body);
+  }
+
+  @Patch(':id/publish')
+  publishBlog(@Param('id') id: string) {
+    return this.service.update(id, { isPublished: true });
   }
 
   @Delete(':id')

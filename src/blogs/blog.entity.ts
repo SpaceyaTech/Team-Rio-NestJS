@@ -25,6 +25,9 @@ export class BlogPost {
   @ManyToOne(() => User, (user) => user.blogs)
   author: User;
 
+  @Column({ type: 'boolean', default: false, name: 'is_published' })
+  isPublished: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
