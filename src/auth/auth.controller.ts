@@ -29,4 +29,9 @@ export class AuthController {
   profile(@Request() req) {
     return req.user;
   }
+
+  @Get('logout')
+  logout(@Request() req) {
+    return req.logout(() => null);
+  }
 }

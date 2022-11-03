@@ -69,3 +69,6 @@ Content-Type: application/json
 
 ###
 GET {{BASE_URL}}/auth/profile
+
+###
+GET {{BASE_URL}}/auth/logout
