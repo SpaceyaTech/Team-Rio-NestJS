@@ -6,11 +6,15 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
+import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
 import { AuthService } from './auth.service';
 import { LoginGuard } from './guards/login.guard';
+import { RequireAuth } from './guards/require-auth.guard';
 
 @Controller('auth')
+@Serialize(FetchUserDto)
 export class AuthController {
   constructor(private authService: AuthService) {}
 
@@ -26,11 +30,13 @@ export class AuthController {
   }
 
   @Get('profile')
+  @UseGuards(RequireAuth)
   profile(@Request() req) {
     return req.user;
   }
 
   @Get('logout')
+  @UseGuards(RequireAuth)
   logout(@Request() req) {
     return req.logout(() => null);
   }
