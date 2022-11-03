@@ -6,6 +6,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
 import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
@@ -31,8 +32,8 @@ export class AuthController {
 
   @Get('profile')
   @UseGuards(RequireAuth)
-  profile(@Request() req) {
-    return req.user;
+  profile(@CurrentUser() user) {
+    return user;
   }
 
   @Get('logout')

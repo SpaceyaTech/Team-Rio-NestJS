@@ -2,6 +2,9 @@ import { Expose } from 'class-transformer';
 
 export class FetchUserDto {
   @Expose()
+  id: string;
+
+  @Expose()
   firstName: string;
 
   @Expose()
