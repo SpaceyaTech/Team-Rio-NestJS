@@ -1,8 +1,10 @@
 import { BlogPost } from 'src/blogs/blog.entity';
+import { Role } from 'src/roles/role.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -43,12 +45,15 @@ export class User {
   // @Column({ type: 'enum', enum: AccountStatus, default: AccountStatus.ACTIVE })
   // accountStatus: AccountStatus;
 
-  @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
-  blogs: BlogPost[];
-
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
+  blogs: BlogPost[];
+
+  @ManyToOne(() => Role, (role) => role.users)
+  role: Role;
 }
