@@ -42,8 +42,7 @@ Content-Type: application/json
 {
     "title": "Lorem Ipsum",
     "description": "lorem ipsum",
-    "content": "Lorem ipsum dolor",
-    "user": "1fe8099c-719e-49c3-bacf-bf2783963b0b"
+    "content": "Lorem ipsum dolor"
 }
 
 ###

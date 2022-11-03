@@ -1,11 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/user.entity';
+import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { BlogPost } from './blog.entity';
 
 @Injectable()
 export class BlogsService {
-  constructor(@InjectRepository(BlogPost) private repo: Repository<BlogPost>) {}
+  constructor(
+    @InjectRepository(BlogPost) private repo: Repository<BlogPost>,
+    private usersService: UsersService,
+  ) {}
 
   async findById(id: string) {
     const blog = await this.repo.findOneBy({ id });
@@ -17,7 +22,9 @@ export class BlogsService {
     return this.repo.find();
   }
 
-  create(blog: Partial<BlogPost>) {
+  async create(blog: Partial<BlogPost>, user: Partial<User>) {
+    const author = await this.usersService.findById(user.id);
+    blog.author = author;
     const newBlog = this.repo.create(blog);
     return this.repo.save(newBlog);
   }
