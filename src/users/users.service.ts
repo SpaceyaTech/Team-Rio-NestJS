@@ -17,6 +17,11 @@ export class UsersService {
     return user;
   }
 
+  async findOneBy(filters?: Partial<User> | null) {
+    const [user] = await this.repo.find({ where: filters });
+    return user;
+  }
+
   async findByEmail(email: string) {
     const user = await this.repo.findOneBy({ email });
     return user;
