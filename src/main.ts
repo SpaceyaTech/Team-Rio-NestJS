@@ -11,7 +11,7 @@ async function bootstrap() {
 
   app.enableCors();
   if (process.env.NODE_ENV === 'production') app.use(helmet());
-  app.use(compression());
+  app.use(compression()); // compress the response
 
   app.use(cookieParser());
   app.use(
