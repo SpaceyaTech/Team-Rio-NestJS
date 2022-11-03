@@ -45,3 +45,27 @@ Content-Type: application/json
     "content": "Lorem ipsum dolor",
     "user": "1fe8099c-719e-49c3-bacf-bf2783963b0b"
 }
+
+###
+POST {{BASE_URL}}/auth/signup
+Content-Type: application/json
+
+{
+    "firstName": "Ernest",
+    "lastName": "Wambua",
+    "email": "ernestwambua5@gmail.com",
+    "phone": "+254715286396",
+    "password": "password123"
+}
+
+###
+POST {{BASE_URL}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "ernestwambua5@gmail.com",
+    "password": "password123"
+}
+
+###
+GET {{BASE_URL}}/auth/profile
