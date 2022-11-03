@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { CommentsModule } from './comments/comments.module';
 import { ReactionsModule } from './reactions/reactions.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ReactionsModule } from './reactions/reactions.module';
     RolesModule,
     CommentsModule,
     ReactionsModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

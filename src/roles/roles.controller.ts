@@ -7,10 +7,12 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { RoleDto } from './role.dto';
 import { RolesService } from './roles.service';
 
 @Controller('roles')
+@ApiTags('Roles')
 export class RolesController {
   constructor(private service: RolesService) {}
 

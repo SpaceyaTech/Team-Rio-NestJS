@@ -6,6 +6,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
@@ -15,6 +16,7 @@ import { LoginGuard } from './guards/login.guard';
 import { RequireAuth } from './guards/require-auth.guard';
 
 @Controller('auth')
+@ApiTags('Auth')
 @Serialize(FetchUserDto)
 export class AuthController {
   constructor(private authService: AuthService) {}

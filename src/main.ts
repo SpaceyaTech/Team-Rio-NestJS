@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import helmet from 'helmet';
 import * as compression from 'compression';
 import * as passport from 'passport';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
@@ -24,6 +25,17 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
+
+  // setup swagger
+  const config = new DocumentBuilder()
+    .setTitle('SpaceYaTech Backend API')
+    .setDescription(
+      'Backend API for the SpaceYaTech project implemented using NestJS framework',
+    )
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(5000);
 }

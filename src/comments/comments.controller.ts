@@ -8,6 +8,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { RequireAuth } from 'src/auth/guards/require-auth.guard';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
@@ -15,6 +16,7 @@ import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dtos/create-comment.dto';
 
 @Controller('comments')
+@ApiTags('Comments')
 export class CommentsController {
   constructor(private service: CommentsService) {}
 
