@@ -31,11 +31,6 @@ export class UsersService {
     return user;
   }
 
-  async findByPhone(phone: string) {
-    const user = await this.repo.findOneBy({ phone });
-    return user;
-  }
-
   find() {
     return this.repo.find();
   }
@@ -44,9 +39,6 @@ export class UsersService {
     const existingUserEmail = await this.findByEmail(user.email);
     if (existingUserEmail)
       throw new BadRequestException('User with that email already exists');
-    const existingUserPhone = await this.findByPhone(user.phone);
-    if (existingUserPhone)
-      throw new BadRequestException('User with that phone number exists');
     const newUser = this.repo.create(user);
     return this.repo.save(newUser);
   }
