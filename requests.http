@@ -25,6 +25,7 @@ GET {{BASE_URL}}/users/b2994cb0-bcd3-47b2-967a-f7724acc2c0a
 PATCH {{BASE_URL}}/users/b2994cb0-bcd3-47b2-967a-f7724acc2c0a
 Content-Type: application/json
 
+
 {
     "avatar": "https://bit.ly/3Wgeq06"
 }

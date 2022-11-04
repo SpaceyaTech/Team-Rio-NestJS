@@ -9,22 +9,23 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { RequireAuth } from 'src/auth/guards/require-auth.guard';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
 import { BlogsService } from './blogs.service';
+import { CreateBlogDto } from './dtos/create-blog.dto';
 import { EditBlogDto } from './dtos/edit-blog.dto';
 import { FetchBlogDto } from './dtos/fetch-blog.dto';
-import { CreateBlogInterceptor } from './interceptors/create-blog.interceptor';
 
-@Controller('blogs')
 @ApiTags('Blogs')
+@Controller('blogs')
 @Serialize(FetchBlogDto)
 export class BlogsController {
   constructor(private service: BlogsService) {}
 
+  // GET all the blog posts
   @ApiOperation({
     summary: 'Get all blogs',
     description: 'Gets all the blogs stored in the database',
@@ -34,6 +35,7 @@ export class BlogsController {
     return this.service.find();
   }
 
+  // GET a single blog post
   @ApiOperation({
     summary: 'Get a single blog post',
     description:
@@ -45,12 +47,17 @@ export class BlogsController {
     return this.service.findById(id);
   }
 
+  // CREATE a blog post
   @ApiOperation({
     summary: 'Create a blog post',
     description:
-      'Create a blog post. Requires a user to be authenticated\
-    by default the blog is not published but instead it is saved as a draft.\
-    For the frontend a rich text editor such as TinyMCE will be used to write blogs',
+      'Create a blog post. Requires a user to be authenticated.\
+       By default the blog is not published but instead it is saved as a draft.\
+       For the frontend a rich text editor such as TinyMCE will be used to write blogs',
+  })
+  @ApiBody({
+    type: CreateBlogDto,
+    description: 'Create blog post structure',
   })
   @Post()
   @UseGuards(RequireAuth)
@@ -58,10 +65,15 @@ export class BlogsController {
     return this.service.create(body, user);
   }
 
+  // EDIT a blog post
   @ApiOperation({
     summary: 'Edit a blog post',
     description:
       'Change the contents of a blog post and the categories it belongs to',
+  })
+  @ApiBody({
+    type: EditBlogDto,
+    description: 'Edit blog post structure',
   })
   @Patch(':id')
   @UseGuards(RequireAuth)
@@ -69,11 +81,12 @@ export class BlogsController {
     return this.service.update(id, body);
   }
 
+  // PUBLISH a blog post
   @ApiOperation({
     summary: 'Publish a blog',
     description:
       'Once a user finishes writing and proofreading a blog post they\
-    can publish it for the world to see their amazing work',
+       can publish it for the world to see their amazing work',
   })
   @Patch(':id/publish')
   @UseGuards(RequireAuth)
@@ -81,12 +94,18 @@ export class BlogsController {
     return this.service.update(id, { isPublished: true });
   }
 
+  // DELETE a blog post
   @ApiOperation({
     summary: 'Delete a blog post',
     description:
       "Deletes a blog post. When a blog post is deleted, this will delete\
-    the corresponding comments and reactions. Before deleteing the blog create a prompt\
-    that confirms the user's action to avoid accidental deletion since this action is permanent",
+       the corresponding comments and reactions. Before deleteing the blog create a prompt\
+       that confirms the user's action to avoid accidental deletion since this action is permanent",
+  })
+  @ApiParam({
+    name: 'id',
+    type: 'uuid',
+    example: 'b2994cb0-bcd3-47b2-967a-f7724acc2c0a',
   })
   @Delete(':id')
   @UseGuards(RequireAuth)
