@@ -13,7 +13,7 @@ Content-Type: application/json
 {
     "firstName": "Ernest",
     "lastName": "Wambua",
-    "email": "ernestwambua4@gmail.com",
+    "email": "ernestwambua7@gmail.com",
     "phone": "+254712286396",
     "password": "password123"
 }
@@ -33,6 +33,36 @@ Content-Type: application/json
 ###
 DELETE {{BASE_URL}}/users/a74d149a-a154-4765-8a93-3074bba776c4
 
+
+
+
+###
+POST {{BASE_URL}}/auth/signup
+Content-Type: application/json
+
+{
+    "firstName": "Ernest",
+    "lastName": "Wambua",
+    "email": "ernestwambua7@gmail.com",
+    "phone": "+254717286396",
+    "password": "password123"
+}
+
+###
+POST {{BASE_URL}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "ernestwambua7@gmail.com",
+    "password": "password123"
+}
+
+###
+GET {{BASE_URL}}/auth/profile
+
+###
+GET {{BASE_URL}}/auth/logout
+
 ###
 GET {{BASE_URL}}/blogs
 
@@ -47,28 +77,22 @@ Content-Type: application/json
 }
 
 ###
-POST {{BASE_URL}}/auth/signup
+GET {{BASE_URL}}/reactions
+
+###
+GET {{BASE_URL}}/reactions/14b5f3b0-89b0-497a-a1ac-4b30f3d55a3b
+
+###
+GET {{BASE_URL}}/reactions/count?blogId=9866ffea-385f-4bdf-b78b-5fc8ffbda883
+
+###
+POST {{BASE_URL}}/reactions
 Content-Type: application/json
 
 {
-    "firstName": "Ernest",
-    "lastName": "Wambua",
-    "email": "ernestwambua5@gmail.com",
-    "phone": "+254715286396",
-    "password": "password123"
+    "type": "upvote",
+    "blogId": "9866ffea-385f-4bdf-b78b-5fc8ffbda883"
 }
 
 ###
-POST {{BASE_URL}}/auth/login
-Content-Type: application/json
-
-{
-    "email": "ernestwambua5@gmail.com",
-    "password": "password123"
-}
-
-###
-GET {{BASE_URL}}/auth/profile
-
-###
-GET {{BASE_URL}}/auth/logout
+DELETE {{BASE_URL}}/reactions/14b5f3b0-89b0-497a-a1ac-4b30f3d55a3b
