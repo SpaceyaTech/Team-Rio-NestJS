@@ -19,4 +19,16 @@ export class AuthService {
     user.password = bcrypt.hashSync(user.password, 10);
     return this.usersService.create(user);
   }
+
+  async validatePassword(password: string, userId: string): Promise<boolean> {
+    const user = await this.usersService.findById(userId);
+    const passwordIsValid = await bcrypt.compare(password, user.password);
+    if (!passwordIsValid) return false;
+    return true;
+  }
+
+  async changePassword(userId: string, newPassword: string) {
+    const password = bcrypt.hashSync(newPassword, 10);
+    return this.usersService.update(userId, { password });
+  }
 }
