@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { BlogsService } from 'src/blogs/blogs.service';
 import { CommentsService } from 'src/comments/comments.service';
 import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
-import { Equal, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateReactionDto } from './dtos/create-reaction.dto';
 import { EditReactionDto } from './dtos/edit-reaction.dto';
 import { Reaction, ReactionType } from './reaction.entity';
@@ -25,14 +25,12 @@ export enum ReactionFilterTypes {
 
 @Injectable()
 export class ReactionsService {
-  constructor(
-    @InjectRepository(Reaction) private repo: Repository<Reaction>,
-    private blogsService: BlogsService,
-    private commentsService: CommentsService,
-  ) {}
+  constructor(@InjectRepository(Reaction) private repo: Repository<Reaction>) {}
 
   find() {
-    return this.repo.find();
+    return this.repo.find({
+      relations: { blog: true, user: true, comment: true },
+    });
   }
 
   async findByAndCount(filters: FindFilters) {
@@ -82,9 +80,7 @@ export class ReactionsService {
       if (existingReaction)
         // check if the reaction exists
         throw new BadRequestException('You have already reacted to this post');
-      const blog = await this.blogsService.findById(blogId);
-      if (!blog) throw new NotFoundException('Blog not found');
-      newReaction = this.repo.create({ type, blog, user });
+      newReaction = this.repo.create({ type, blog: { id: blogId }, user });
     } else if (commentId && !blogId) {
       // check if user is reacting to a comment
       const [existingReaction] = await this.repo.find({
@@ -95,9 +91,11 @@ export class ReactionsService {
         throw new BadRequestException(
           'You have already reacted to this comment',
         );
-      const comment = await this.commentsService.findById(commentId);
-      if (!comment) throw new NotFoundException('Comment not found');
-      newReaction = this.repo.create({ type, comment, user });
+      newReaction = this.repo.create({
+        type,
+        comment: { id: commentId },
+        user,
+      });
     } else
       throw new BadRequestException(
         'Provide either the comment or the blog post',

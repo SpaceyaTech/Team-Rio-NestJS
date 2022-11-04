@@ -3,12 +3,10 @@ import { ReactionsService } from './reactions.service';
 import { ReactionsController } from './reactions.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Reaction } from './reaction.entity';
-import { BlogsModule } from 'src/blogs/blogs.module';
-import { CommentsModule } from 'src/comments/comments.module';
 
 @Module({
   exports: [ReactionsService],
-  imports: [TypeOrmModule.forFeature([Reaction]), BlogsModule, CommentsModule],
+  imports: [TypeOrmModule.forFeature([Reaction])],
   providers: [ReactionsService],
   controllers: [ReactionsController],
 })

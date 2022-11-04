@@ -13,8 +13,8 @@ Content-Type: application/json
 {
     "firstName": "Ernest",
     "lastName": "Wambua",
-    "email": "ernestwambua7@gmail.com",
-    "phone": "+254712286396",
+    "email": "ernestwambua8@gmail.com",
+    "phone": "+254718286396",
     "password": "password123"
 }
 
@@ -43,8 +43,8 @@ Content-Type: application/json
 {
     "firstName": "Ernest",
     "lastName": "Wambua",
-    "email": "ernestwambua7@gmail.com",
-    "phone": "+254717286396",
+    "email": "ernestwambua8@gmail.com",
+    "phone": "+254718286396",
     "password": "password123"
 }
 
@@ -53,7 +53,7 @@ POST {{BASE_URL}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "ernestwambua7@gmail.com",
+    "email": "ernestwambua8@gmail.com",
     "password": "password123"
 }
 
@@ -65,6 +65,9 @@ GET {{BASE_URL}}/auth/logout
 
 ###
 GET {{BASE_URL}}/blogs
+
+###
+GET {{BASE_URL}}/blogs/9866ffea-385f-4bdf-b78b-5fc8ffbda883
 
 ###
 POST {{BASE_URL}}/blogs
@@ -90,7 +93,7 @@ POST {{BASE_URL}}/reactions
 Content-Type: application/json
 
 {
-    "type": "upvote",
+    "type": "downvote",
     "blogId": "9866ffea-385f-4bdf-b78b-5fc8ffbda883"
 }
 
