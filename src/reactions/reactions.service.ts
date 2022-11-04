@@ -36,15 +36,29 @@ export class ReactionsService {
   }
 
   async findByAndCount(filters: FindFilters) {
-    let count: number;
+    let upVotes: number = 0;
+    let downVotes: number = 0;
+    let total: number = 0;
     if (filters.type === ReactionFilterTypes.BLOG) {
-      count = await this.repo.count({ where: { blog: { id: filters.id } } });
+      upVotes = await this.repo.count({
+        where: { blog: { id: filters.id }, type: ReactionType.UPVOTE },
+      });
+      downVotes = await this.repo.count({
+        where: { blog: { id: filters.id }, type: ReactionType.DOWNVOTE },
+      });
+      total = await this.repo.count({ where: { blog: { id: filters.id } } });
     } else if (filters.type === ReactionFilterTypes.COMMENT) {
-      count = await this.repo.count({
+      upVotes = await this.repo.count({
+        where: { comment: { id: filters.id }, type: ReactionType.UPVOTE },
+      });
+      downVotes = await this.repo.count({
+        where: { comment: { id: filters.id }, type: ReactionType.DOWNVOTE },
+      });
+      total = await this.repo.count({
         where: { comment: { id: filters.id } },
       });
     } else throw new InternalServerErrorException('Invalid reaction filter');
-    return { count };
+    return { upVotes, downVotes, total };
   }
 
   async findById(id: string) {
