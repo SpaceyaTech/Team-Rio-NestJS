@@ -1,10 +1,12 @@
 import { BlogPost } from 'src/blogs/blog.entity';
+import { Reaction } from 'src/reactions/reaction.entity';
 import { User } from 'src/users/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -31,4 +33,7 @@ export class Comment {
 
   @ManyToOne(() => User, (user) => user.comments)
   user: User;
+
+  @OneToMany(() => Reaction, (reaction) => reaction.comment)
+  reactions: Reaction;
 }

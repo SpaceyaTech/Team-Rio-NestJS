@@ -1,4 +1,5 @@
 import { Comment } from 'src/comments/comment.entity';
+import { Reaction } from 'src/reactions/reaction.entity';
 import { User } from 'src/users/user.entity';
 import {
   Column,
@@ -38,4 +39,7 @@ export class BlogPost {
 
   @OneToMany(() => Comment, (comment) => comment.blog)
   comments: Comment[];
+
+  @OneToMany(() => Reaction, (reaction) => reaction.blog)
+  reactions: Reaction[];
 }
