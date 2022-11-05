@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Role } from './role.entity';
+import { Role, RoleTypes } from './role.entity';
 
 @Injectable()
 export class RolesService {
@@ -24,6 +24,13 @@ export class RolesService {
   async findOneBy(filter?: Partial<Role> | null) {
     const [role] = await this.repo.find({ where: filter });
     return role;
+  }
+
+  async findUsers(role: string) {
+    return this.repo.find({
+      where: { name: role },
+      relations: { users: true },
+    });
   }
 
   async create(role: Partial<Role>) {

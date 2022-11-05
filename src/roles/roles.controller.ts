@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { RoleDto } from './role.dto';
@@ -24,6 +25,16 @@ export class RolesController {
   @Get()
   getRoles() {
     return this.service.find();
+  }
+
+  // GET users role
+  @ApiOperation({
+    summary: 'Get all users with a certain role',
+    description: 'Fetch users who have a certain role',
+  })
+  @Get('users')
+  getUsers(@Query('role') role: string) {
+    return this.service.findUsers(role);
   }
 
   // GET a single role
