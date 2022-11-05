@@ -14,6 +14,7 @@ import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dtos/create-comment.dto';
+import { EditCommentDto } from './dtos/edit-comment.dto';
 
 @ApiTags('Comments')
 @Controller('comments')
@@ -64,7 +65,7 @@ export class CommentsController {
   })
   @Patch(':id')
   @UseGuards(RequireAuth)
-  editComment(@Param('id') id: string, @Body() body: any) {
+  editComment(@Param('id') id: string, @Body() body: EditCommentDto) {
     return this.service.update(id, body);
   }
 
