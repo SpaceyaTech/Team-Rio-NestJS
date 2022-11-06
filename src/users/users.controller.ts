@@ -7,13 +7,19 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { RoleTypes } from 'src/roles/role.entity';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { EditUserDto } from './dtos/edit-user.dto';
 import { UsersService } from './users.service';
 
 @ApiTags('Users')
+@Roles(RoleTypes.ADMIN) // only admins can create users and manage users
+@UseGuards(RolesGuard)
 @Controller('users')
 export class UsersController {
   constructor(private service: UsersService) {}
