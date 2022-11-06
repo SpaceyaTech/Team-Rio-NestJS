@@ -1,9 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PageDto, PageMetaDto, PageOptionsDto } from 'src/dtos/page.dto';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { BlogPost } from './blog.entity';
+import { FetchBlogDto } from './dtos/fetch-blog.dto';
 
 @Injectable()
 export class BlogsService {
@@ -18,8 +20,16 @@ export class BlogsService {
     return blog;
   }
 
-  find() {
-    return this.repo.find();
+  async find(pageOptions: PageOptionsDto): Promise<PageDto<BlogPost>> {
+    const qb = this.repo.createQueryBuilder('users');
+    qb.orderBy('users.createdAt', pageOptions.order)
+      .skip(pageOptions.skip)
+      .take(pageOptions.perPage);
+
+    const itemCount = await qb.getCount();
+    const { entities } = await qb.getRawAndEntities();
+    const pageMeta = new PageMetaDto({ pageOptions, itemCount });
+    return new PageDto(entities, pageMeta);
   }
 
   async create(blog: Partial<BlogPost>, user: Partial<User>) {

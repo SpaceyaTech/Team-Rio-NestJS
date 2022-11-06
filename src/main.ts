@@ -4,12 +4,14 @@ import helmet from 'helmet';
 import * as compression from 'compression';
 import * as passport from 'passport';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.enableCors();
   if (process.env.NODE_ENV === 'production') app.use(helmet());
   app.use(compression()); // compress the response

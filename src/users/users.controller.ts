@@ -18,7 +18,7 @@ import { EditUserDto } from './dtos/edit-user.dto';
 import { UsersService } from './users.service';
 
 @ApiTags('Users')
-@Roles(RoleTypes.ADMIN) // only admins can create users and manage users
+// @Roles(RoleTypes.ADMIN) // only admins can create users and manage users
 @UseGuards(RolesGuard)
 @Controller('users')
 export class UsersController {

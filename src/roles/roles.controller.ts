@@ -19,7 +19,7 @@ import { RolesService } from './roles.service';
 
 @ApiTags('Roles')
 @Controller('roles')
-@Roles(RoleTypes.ADMIN)
+// @Roles(RoleTypes.ADMIN)
 @UseGuards(RequireAuth, RolesGuard)
 export class RolesController {
   constructor(private service: RolesService) {}
