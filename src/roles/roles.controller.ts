@@ -7,13 +7,20 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { RequireAuth } from 'src/auth/guards/require-auth.guard';
+import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from 'src/guards/roles.guard';
 import { RoleDto } from './role.dto';
+import { RoleTypes } from './role.entity';
 import { RolesService } from './roles.service';
 
 @ApiTags('Roles')
 @Controller('roles')
+@Roles(RoleTypes.ADMIN)
+@UseGuards(RequireAuth, RolesGuard)
 export class RolesController {
   constructor(private service: RolesService) {}
 

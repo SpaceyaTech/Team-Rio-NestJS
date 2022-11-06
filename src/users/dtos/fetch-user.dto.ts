@@ -1,4 +1,10 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { Role } from 'src/roles/role.entity';
+
+export class FetchRoleDto {
+  @Expose()
+  name: string;
+}
 
 export class FetchUserDto {
   @Expose()
@@ -18,4 +24,8 @@ export class FetchUserDto {
 
   @Expose()
   avatar: string;
+
+  @Expose()
+  @Type(() => FetchRoleDto)
+  role: Role;
 }

@@ -23,7 +23,10 @@ export class UsersService {
   }
 
   async findOneBy(filters?: Partial<User> | null) {
-    const [user] = await this.repo.find({ where: filters });
+    const [user] = await this.repo.find({
+      where: filters,
+      relations: { role: true },
+    });
     return user;
   }
 
