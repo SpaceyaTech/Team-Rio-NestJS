@@ -4,12 +4,17 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RoleTypes } from 'src/roles/role.entity';
+import { RolesService } from 'src/roles/roles.service';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private repo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private repo: Repository<User>,
+    private rolesService: RolesService,
+  ) {}
 
   async findById(id: string) {
     const user = await this.repo.findOneBy({ id });
@@ -39,8 +44,22 @@ export class UsersService {
     const existingUserEmail = await this.findByEmail(user.email);
     if (existingUserEmail)
       throw new BadRequestException('User with that email already exists');
+    let role = await this.rolesService.findOneBy({ name: RoleTypes.USER });
+    if (!role) {
+      await this.rolesService.create({ name: RoleTypes.USER });
+      // by default a new user will have a user role
+      role = await this.rolesService.findOneBy({ name: RoleTypes.USER });
+    }
+    user.role = role;
     const newUser = this.repo.create(user);
     return this.repo.save(newUser);
+  }
+
+  async changeRole(id: string, role: string) {
+    const user = await this.findById(id);
+    const newRole = await this.rolesService.findOneBy({ name: role });
+    user.role = newRole;
+    return this.repo.save(user);
   }
 
   async update(id: string, attr: Partial<User>) {

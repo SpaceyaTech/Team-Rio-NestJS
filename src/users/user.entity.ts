@@ -56,7 +56,7 @@ export class User {
   @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
   blogs: BlogPost[];
 
-  @ManyToOne(() => Role, (role) => role.users)
+  @ManyToOne(() => Role, (role) => role.users, { nullable: false })
   role: Role;
 
   @OneToMany(() => Comment, (comment) => comment.user)
