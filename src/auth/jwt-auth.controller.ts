@@ -11,11 +11,14 @@ import { ConfigService } from '@nestjs/config';
 import { AuthConfig } from 'config';
 import { Response, Request } from 'express';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
 import { LoginDto } from './dtos/login.dto';
 import { RequireAuth } from './guards/require-auth.guard';
 import { TokensService } from './tokens.service';
 
 @Controller('auth/jwt')
+@Serialize(FetchUserDto)
 export class JwtAuthController {
   authConfig: AuthConfig;
 
