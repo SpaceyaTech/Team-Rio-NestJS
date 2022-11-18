@@ -64,7 +64,7 @@ GET {{BASE_URL}}/auth/profile
 GET {{BASE_URL}}/auth/logout
 
 ###
-GET {{BASE_URL}}/blogs
+GET {{BASE_URL}}/blogs?page=1
 
 ###
 GET {{BASE_URL}}/blogs/9866ffea-385f-4bdf-b78b-5fc8ffbda883

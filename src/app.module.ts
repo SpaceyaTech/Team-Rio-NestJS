@@ -9,6 +9,7 @@ import { RolesModule } from './roles/roles.module';
 import { CommentsModule } from './comments/comments.module';
 import { ReactionsModule } from './reactions/reactions.module';
 import { CategoriesModule } from './categories/categories.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -17,6 +18,10 @@ import { CategoriesModule } from './categories/categories.module';
       database: 'db.sqlite',
       synchronize: true,
       autoLoadEntities: true,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true, // set the config file to global
+      ignoreEnvFile: true, // we will load our own custom config file
     }),
     BlogsModule,
     UsersModule,
