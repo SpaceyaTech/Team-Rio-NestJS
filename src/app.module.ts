@@ -10,18 +10,22 @@ import { CommentsModule } from './comments/comments.module';
 import { ReactionsModule } from './reactions/reactions.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ConfigModule } from '@nestjs/config';
+import config from './config';
+
+const { db } = config();
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'db.sqlite',
-      synchronize: true,
-      autoLoadEntities: true,
+      database: db.database,
+      synchronize: db.synchronize,
+      autoLoadEntities: db.autoLoadEntities,
     }),
     ConfigModule.forRoot({
       isGlobal: true, // set the config file to global
       ignoreEnvFile: true, // we will load our own custom config file
+      load: [config], // load custom config file
     }),
     BlogsModule,
     UsersModule,

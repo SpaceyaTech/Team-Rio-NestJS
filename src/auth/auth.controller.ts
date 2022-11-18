@@ -22,6 +22,17 @@ import { RequireAuth } from './guards/require-auth.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  // POST a new user
+  @ApiOperation({
+    summary: 'Sugnup user',
+    description:
+      'Creates a new user account. Checks if a user with that email exists',
+  })
+  @Post('signup')
+  signup(@Body() body: CreateUserDto) {
+    return this.authService.signup(body);
+  }
+
   // POST authentication details
   @ApiOperation({
     summary: 'Login a user',
@@ -35,16 +46,8 @@ export class AuthController {
     return req.user;
   }
 
-  // POST a new user
-  @ApiOperation({
-    summary: 'Sugnup user',
-    description:
-      'Creates a new user account. Checks if a user with that email exists',
-  })
-  @Post('signup')
-  signup(@Body() body: CreateUserDto) {
-    return this.authService.signup(body);
-  }
+  @Post('login/jwt')
+  loginJwt() {}
 
   // GET a user's profile details
   @ApiOperation({

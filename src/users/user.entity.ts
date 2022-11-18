@@ -1,3 +1,4 @@
+import { RefreshToken } from 'src/auth/refresh-token.entity';
 import { BlogPost } from 'src/blogs/blog.entity';
 import { Comment } from 'src/comments/comment.entity';
 import { Reaction } from 'src/reactions/reaction.entity';
@@ -8,6 +9,7 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -64,4 +66,7 @@ export class User {
 
   @OneToMany(() => Reaction, (reaction) => reaction.user)
   reactions: Reaction[];
+
+  @OneToOne(() => RefreshToken, (token) => token.user)
+  tokens: RefreshToken;
 }
