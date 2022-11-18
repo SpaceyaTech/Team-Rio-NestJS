@@ -28,4 +28,7 @@ export class FetchUserDto {
   @Expose()
   @Type(() => FetchRoleDto)
   role: Role;
+
+  @Expose()
+  accessToken: string;
 }

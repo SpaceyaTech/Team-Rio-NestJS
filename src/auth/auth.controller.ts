@@ -3,10 +3,12 @@ import {
   Controller,
   Get,
   Post,
-  Request,
+  Request as NestRequest,
+  Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
@@ -42,12 +44,9 @@ export class AuthController {
   })
   @Post('login')
   @UseGuards(LoginGuard)
-  login(@Request() req, @Body() body: LoginDto) {
+  login(@NestRequest() req, @Body() body: LoginDto) {
     return req.user;
   }
-
-  @Post('login/jwt')
-  loginJwt() {}
 
   // GET a user's profile details
   @ApiOperation({
@@ -56,8 +55,8 @@ export class AuthController {
   })
   @Get('profile')
   @UseGuards(RequireAuth)
-  profile(@CurrentUser() user) {
-    return user;
+  async profile(@CurrentUser() user) {
+    return this.authService.getCurrentUser(user);
   }
 
   // GET logout a user
@@ -68,7 +67,7 @@ export class AuthController {
   })
   @Get('logout')
   @UseGuards(RequireAuth)
-  logout(@Request() req) {
+  logout(@NestRequest() req) {
     return req.logout(() => null);
   }
 }
