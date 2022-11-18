@@ -17,17 +17,17 @@ import { TokensService } from './tokens.service';
 
 @Controller('auth/jwt')
 export class JwtAuthController {
-  private authConfig: AuthConfig;
+  authConfig: AuthConfig;
 
   constructor(
     private tokensService: TokensService,
     private configService: ConfigService,
   ) {
-    this.authConfig = configService.get<AuthConfig>('auth');
+    this.authConfig = this.configService.get<AuthConfig>('auth');
   }
 
   @Post('login')
-  async loginJwt(
+  async login(
     @Body() body: LoginDto,
     @Res({ passthrough: true }) res: Response,
   ) {
@@ -36,7 +36,7 @@ export class JwtAuthController {
       httpOnly: true, // make the refresh token a HttpOnly cookie for security
       maxAge: 1000 * this.authConfig.jwtRefreshExpire, // convert to milliseconds
     });
-    return res.json(loginRes);
+    return loginRes;
   }
 
   @Get('refresh-token')
@@ -47,8 +47,8 @@ export class JwtAuthController {
   @Get('logout')
   @UseGuards(RequireAuth)
   async logout(@CurrentUser() user, @Res() res: Response) {
-    const { token } = await this.tokensService.findOneBy({ user });
+    const { token } = await this.tokensService.findByUser(user.id);
     await this.tokensService.delete(token);
-    return res.clearCookie('refreshToken', { httpOnly: true });
+    return res.clearCookie('refreshToken', { httpOnly: true }).send();
   }
 }

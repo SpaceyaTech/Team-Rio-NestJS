@@ -50,14 +50,13 @@ export class TokensService {
   }
 
   async refreshToken(token: string) {
-    if (!token)
-      throw new UnauthorizedException('Please provide a refresh token');
+    if (!token) throw new UnauthorizedException('You are not logged in');
     const refreshToken = await this.findOne(token);
-    const tokenIsExpired = this.verifyTokenExpiration(refreshToken);
-    if (tokenIsExpired) {
+    const tokenIsValid = this.verifyTokenExpiration(refreshToken);
+    if (!tokenIsValid) {
       await this.delete(refreshToken.token);
       throw new UnauthorizedException(
-        'Refresh token is expired, please sign in again',
+        'Refresh token is expired, please login again',
       );
     }
     const accessToken = jwt.sign(
@@ -71,16 +70,16 @@ export class TokensService {
   }
 
   async findOne(token: string) {
-    const refreshToken = await this.tokensRepository.findOneBy({
-      token,
-      user: true,
+    const refreshToken = await this.tokensRepository.findOne({
+      where: { token },
+      relations: { user: true },
     });
     if (!refreshToken) throw new BadRequestException('Invalid token');
     return refreshToken;
   }
 
-  async findOneBy(token: Partial<RefreshToken>) {
-    return this.tokensRepository.findOneBy(token);
+  async findByUser(userId: string) {
+    return this.tokensRepository.findOneBy({ user: { id: userId } });
   }
 
   async createToken(userId: string) {

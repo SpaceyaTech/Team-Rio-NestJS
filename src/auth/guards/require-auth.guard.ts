@@ -1,15 +1,21 @@
-import jwt from 'jsonwebtoken';
 import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
+import { ConfigService } from '@nestjs/config';
+import config, { AuthConfig } from 'config';
+
+const jwt = require('jsonwebtoken');
 
 export class RequireAuth implements CanActivate {
+  authConfig = config().auth;
+
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req: Request = context.switchToHttp().getRequest();
-    if (req.isAuthenticated) {
-      return req.isAuthenticated();
+
+    if (req.isAuthenticated()) {
+      return true;
     }
 
     let token: any = req.headers['authorization'];
@@ -23,7 +29,7 @@ export class RequireAuth implements CanActivate {
     token = token[1];
 
     try {
-      const decodedToken = jwt.verify(token, 'gsjagjddj');
+      const decodedToken = jwt.verify(token, this.authConfig.jwtSecret);
       req.user = decodedToken;
     } catch (err) {
       return false;
