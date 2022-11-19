@@ -30,4 +30,8 @@ export class Role {
 
   @OneToMany(() => User, (user) => user.role)
   users: User[];
+
+  constructor(name: string) {
+    this.name = name;
+  }
 }

@@ -22,7 +22,7 @@ export class RolesService {
   }
 
   async findOneBy(filter?: Partial<Role> | null) {
-    const [role] = await this.repo.find({ where: filter });
+    const role = await this.repo.findOne({ where: filter });
     return role;
   }
 
