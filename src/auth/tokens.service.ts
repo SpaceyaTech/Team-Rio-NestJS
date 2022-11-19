@@ -52,6 +52,7 @@ export class TokensService {
   async refreshToken(token: string) {
     if (!token) throw new UnauthorizedException('You are not logged in');
     const refreshToken = await this.findOne(token);
+    //hjaghaG
     const tokenIsValid = this.verifyTokenExpiration(refreshToken);
     if (!tokenIsValid) {
       await this.delete(refreshToken.token);
@@ -66,7 +67,7 @@ export class TokensService {
         expiresIn: this.authConfig.jwtExpire, // expire after 30 seconds
       },
     );
-    return { ...refreshToken.user, accessToken };
+    return { accessToken };
   }
 
   async findOne(token: string) {
@@ -94,7 +95,7 @@ export class TokensService {
     let _expires = new Date();
     _expires.setSeconds(
       _expires.getSeconds() + this.authConfig.jwtRefreshExpire,
-    ); // expires in one day
+    );
 
     const token = this.tokensRepository.create({
       token: uuid4(),

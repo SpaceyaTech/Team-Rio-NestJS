@@ -48,9 +48,10 @@ export class JwtAuthController {
   }
 
   @Get('logout')
-  @UseGuards(RequireAuth)
-  async logout(@CurrentUser() user, @Res() res: Response) {
-    const { token } = await this.tokensService.findByUser(user.id);
+  async logout(@CurrentUser() user, @Res() res: Response, @Req() req: Request) {
+    const { token } = await this.tokensService.findOne(
+      req.cookies['refreshToken'],
+    );
     await this.tokensService.delete(token);
     return res.clearCookie('refreshToken', { httpOnly: true }).send();
   }

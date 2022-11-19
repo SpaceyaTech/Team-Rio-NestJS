@@ -1,7 +1,10 @@
-import { CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-import { ConfigService } from '@nestjs/config';
 import config, { AuthConfig } from 'config';
 
 const jwt = require('jsonwebtoken');
@@ -32,7 +35,7 @@ export class RequireAuth implements CanActivate {
       const decodedToken = jwt.verify(token, this.authConfig.jwtSecret);
       req.user = decodedToken;
     } catch (err) {
-      return false;
+      throw new ForbiddenException('Access token has expired');
     }
 
     return true;
