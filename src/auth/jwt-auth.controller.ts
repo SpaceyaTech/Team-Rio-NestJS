@@ -1,20 +1,11 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthConfig } from 'config';
 import { Response, Request } from 'express';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { LoginDto } from './dtos/login.dto';
-import { RequireAuth } from './guards/require-auth.guard';
 import { TokensService } from './tokens.service';
 
 @Controller('auth/jwt')

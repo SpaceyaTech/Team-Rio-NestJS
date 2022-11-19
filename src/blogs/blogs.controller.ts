@@ -11,11 +11,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { RequireAuth } from 'src/auth/guards/require-auth.guard';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { PageOptionsDto } from 'src/dtos/page.dto';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
+import { RequireAuth } from '../auth/guards/require-auth.guard';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import { PageOptionsDto } from '../dtos/page.dto';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dtos/create-blog.dto';
 import { EditBlogDto } from './dtos/edit-blog.dto';

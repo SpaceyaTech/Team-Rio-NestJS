@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RoleTypes } from 'src/roles/role.entity';
-import { RolesService } from 'src/roles/roles.service';
+import { RoleTypes } from '../roles/role.entity';
+import { RolesService } from '../roles/roles.service';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 

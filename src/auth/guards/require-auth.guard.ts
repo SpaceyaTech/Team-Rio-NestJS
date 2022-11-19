@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-import config, { AuthConfig } from 'config';
+import config, { AuthConfig } from '../../../config';
 
 const jwt = require('jsonwebtoken');
 

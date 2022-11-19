@@ -3,7 +3,7 @@ import { BlogsService } from './blogs.service';
 import { BlogsController } from './blogs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BlogPost } from './blog.entity';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
 import { CreateBlogInterceptor } from './interceptors/create-blog.interceptor';
 
 @Module({

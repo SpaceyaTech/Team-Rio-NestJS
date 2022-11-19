@@ -1,6 +1,6 @@
-import { BlogPost } from 'src/blogs/blog.entity';
-import { Reaction } from 'src/reactions/reaction.entity';
-import { User } from 'src/users/user.entity';
+import { BlogPost } from '../blogs/blog.entity';
+import { Reaction } from '../reactions/reaction.entity';
+import { User } from '../users/user.entity';
 import {
   Column,
   CreateDateColumn,

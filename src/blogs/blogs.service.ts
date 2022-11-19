@@ -1,11 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PageDto, PageMetaDto, PageOptionsDto } from 'src/dtos/page.dto';
-import { User } from 'src/users/user.entity';
-import { UsersService } from 'src/users/users.service';
+import { PageDto, PageMetaDto, PageOptionsDto } from '../dtos/page.dto';
+import { User } from '../users/user.entity';
+import { UsersService } from '../users/users.service';
 import { Repository } from 'typeorm';
 import { BlogPost } from './blog.entity';
-import { FetchBlogDto } from './dtos/fetch-blog.dto';
 
 @Injectable()
 export class BlogsService {

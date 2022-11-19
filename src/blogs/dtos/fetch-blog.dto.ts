@@ -1,5 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
+import { FetchUserDto } from '../../users/dtos/fetch-user.dto';
 
 export class AuthorDto {
   @Expose()

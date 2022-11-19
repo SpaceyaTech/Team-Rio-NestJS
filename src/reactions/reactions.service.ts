@@ -5,9 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BlogsService } from 'src/blogs/blogs.service';
-import { CommentsService } from 'src/comments/comments.service';
-import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
+import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { Repository } from 'typeorm';
 import { CreateReactionDto } from './dtos/create-reaction.dto';
 import { EditReactionDto } from './dtos/edit-reaction.dto';

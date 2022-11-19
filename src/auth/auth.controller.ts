@@ -9,10 +9,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
-import { CreateUserDto } from 'src/users/dtos/create-user.dto';
-import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import { Serialize } from '../interceptors/serialize.interceptor';
+import { CreateUserDto } from '../users/dtos/create-user.dto';
+import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
 import { LoginGuard } from './guards/login.guard';

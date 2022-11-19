@@ -9,9 +9,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RequireAuth } from 'src/auth/guards/require-auth.guard';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { FetchUserDto } from 'src/users/dtos/fetch-user.dto';
+import { RequireAuth } from '../auth/guards/require-auth.guard';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dtos/create-comment.dto';
 import { EditCommentDto } from './dtos/edit-comment.dto';

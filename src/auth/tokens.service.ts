@@ -5,13 +5,13 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { Repository } from 'typeorm';
 import { RefreshToken } from './refresh-token.entity';
 import { LoginDto } from './dtos/login.dto';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
-import { AuthConfig } from 'config';
+import { AuthConfig } from '../../config';
 const jwt = require('jsonwebtoken');
 
 @Injectable()

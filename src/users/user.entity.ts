@@ -1,8 +1,8 @@
-import { RefreshToken } from 'src/auth/refresh-token.entity';
-import { BlogPost } from 'src/blogs/blog.entity';
-import { Comment } from 'src/comments/comment.entity';
-import { Reaction } from 'src/reactions/reaction.entity';
-import { Role } from 'src/roles/role.entity';
+import { RefreshToken } from '../auth/refresh-token.entity';
+import { BlogPost } from '../blogs/blog.entity';
+import { Comment } from '../comments/comment.entity';
+import { Reaction } from '../reactions/reaction.entity';
+import { Role } from '../roles/role.entity';
 import {
   Column,
   CreateDateColumn,
