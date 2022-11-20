@@ -28,7 +28,7 @@ export class RolesController {
     description: 'Fetches all the roles in the database',
   })
   @Get()
-  getRoles() {
+  async getRoles() {
     return this.service.find();
   }
 
