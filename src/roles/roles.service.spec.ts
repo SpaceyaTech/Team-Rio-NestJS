@@ -5,12 +5,12 @@ import { Role } from './role.entity';
 import { RolesService } from './roles.service';
 
 const testRoles: Role[] = [
-  new Role('Test Role 1'),
-  new Role('Test Role 2'),
-  new Role('Test Role 3'),
+  new Role('test1', 'Test Role 1'),
+  new Role('test2', 'Test Role 2'),
+  new Role('test3', 'Test Role 3'),
 ];
 
-const testRole: Role = new Role('Test Role');
+const testRole: Role = new Role('test', 'Test Role');
 
 const fakeRepository = {
   find: jest.fn().mockResolvedValue(testRoles),
@@ -47,21 +47,21 @@ describe('RolesService', () => {
   describe('find', () => {
     it('should return an array of roles', async () => {
       const roles = await service.find();
-      expect(roles).toEqual(testRoles);
+      expect(roles).toStrictEqual(testRoles);
     });
   });
 
   describe('findById', () => {
     it('should return a single role', async () => {
       const repoSpy = jest.spyOn(repository, 'findOneBy');
-      expect(service.findById('testId')).resolves.toEqual(testRole);
-      expect(repoSpy).toBeCalledWith({ id: 'testId' });
+      expect(service.findById('test')).resolves.toEqual(testRole);
+      expect(repoSpy).toBeCalledWith({ id: 'test' });
     });
 
     it('should throw an error if user was not found', async () => {
       fakeRepository.findOneBy = jest.fn().mockResolvedValue(null);
       try {
-        const role = await service.findById('testId');
+        const role = await service.findById('test');
       } catch (err) {}
     });
   });
@@ -107,14 +107,14 @@ describe('RolesService', () => {
     it('should update a role with new name', async () => {
       fakeRepository.findOneBy = jest.fn().mockResolvedValue(testRole);
       testRole.name = 'New Name';
-      const updatedRole = await service.update('testId', testRole);
+      const updatedRole = await service.update('test', testRole);
       expect(updatedRole).toBe(testRole);
     });
 
     it('should throw an error if role was not found', async () => {
       fakeRepository.findOneBy = jest.fn().mockResolvedValue(null);
       try {
-        await service.update('testId', testRole);
+        await service.update('test', testRole);
       } catch (err) {}
     });
   });
@@ -122,13 +122,13 @@ describe('RolesService', () => {
   describe('delete', () => {
     it('should delete a role if it exists', async () => {
       fakeRepository.findOneBy = jest.fn().mockResolvedValue(testRole);
-      expect(service.delete('testId')).resolves.toEqual({ deleted: true });
+      expect(service.delete('test')).resolves.toEqual({ deleted: true });
     });
 
     it('should throw an error if role was not found', async () => {
       fakeRepository.findOneBy = jest.fn().mockResolvedValue(null);
       try {
-        await service.delete('testId');
+        await service.delete('test');
       } catch (err) {}
     });
   });
