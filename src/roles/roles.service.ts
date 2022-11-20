@@ -48,7 +48,9 @@ export class RolesService {
     return this.repo.save(role);
   }
 
-  delete(id: string) {
-    return this.repo.delete({ id });
+  async delete(id: string) {
+    const role = await this.findById(id);
+    await this.repo.delete({ id });
+    return { deleted: true };
   }
 }
