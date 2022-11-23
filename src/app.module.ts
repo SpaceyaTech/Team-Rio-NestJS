@@ -11,12 +11,36 @@ import { ReactionsModule } from './reactions/reactions.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ConfigModule } from '@nestjs/config';
 import config from '../config';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
 
 const { db } = config();
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(db),
+    WinstonModule.forRoot({
+      transports: [
+        new winston.transports.Console({
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.logstash(),
+            // winston.format.ms(),
+            // winston.format.colorize({
+            //   all: true,
+            //   colors: { info: 'blue', warning: 'yellow', error: 'red' },
+            // }),
+          ),
+        }),
+        new winston.transports.File({
+          filename: 'combined.log',
+          format: winston.format.combine(
+            winston.format.logstash(),
+            winston.format.timestamp(),
+          ),
+        }),
+      ],
+    }),
     ConfigModule.forRoot({
       isGlobal: true, // set the config file to global
       ignoreEnvFile: true, // we will load our own custom config file

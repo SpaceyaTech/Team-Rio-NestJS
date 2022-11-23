@@ -38,6 +38,7 @@
     "express-session": "^1.17.3",
     "helmet": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
+    "nest-winston": "^1.8.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
@@ -46,7 +47,8 @@
     "sqlite3": "^5.1.2",
     "swagger-ui-express": "^4.5.0",
     "typeorm": "^0.3.10",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -61,7 +62,7 @@ describe('RolesService', () => {
     it('should throw an error if user was not found', async () => {
       fakeRepository.findOneBy = jest.fn().mockResolvedValue(null);
       try {
-        const role = await service.findById('test');
+        await service.findById('test');
       } catch (err) {}
     });
   });

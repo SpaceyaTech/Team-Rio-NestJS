@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
+  LoggerService,
   Param,
   Patch,
   Post,
@@ -10,6 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { RequireAuth } from '../auth/guards/require-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { RoleDto } from './role.dto';
@@ -18,9 +21,13 @@ import { RolesService } from './roles.service';
 @ApiTags('Roles')
 @Controller('roles')
 // @Roles(RoleTypes.ADMIN)
-@UseGuards(RequireAuth, RolesGuard)
+// @UseGuards(RequireAuth, RolesGuard)
 export class RolesController {
-  constructor(private service: RolesService) {}
+  constructor(
+    private service: RolesService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
+  ) {}
 
   // GET roles
   @ApiOperation({
@@ -29,6 +36,7 @@ export class RolesController {
   })
   @Get()
   async getRoles() {
+    this.logger.log('Fetched all roles');
     return this.service.find();
   }
 
