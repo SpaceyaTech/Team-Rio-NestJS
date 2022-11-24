@@ -4,6 +4,9 @@
 GET {{BASE_URL}}
 
 ###
+GET {{BASE_URL}}/roles
+
+###
 GET {{BASE_URL}}/users
 
 ###

@@ -24,9 +24,7 @@ import { RolesService } from './roles.service';
 // @UseGuards(RequireAuth, RolesGuard)
 export class RolesController {
   constructor(
-    private service: RolesService,
-    @Inject(WINSTON_MODULE_NEST_PROVIDER)
-    private readonly logger: LoggerService,
+    private service: RolesService, // @Inject(WINSTON_MODULE_NEST_PROVIDER) // private readonly logger: LoggerService,
   ) {}
 
   // GET roles
@@ -36,7 +34,7 @@ export class RolesController {
   })
   @Get()
   async getRoles() {
-    this.logger.log('Fetched all roles');
+    // this.logger.log('Fetched all roles');
     return this.service.find();
   }
 

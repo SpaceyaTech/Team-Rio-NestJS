@@ -25,11 +25,6 @@ const { db } = config();
           format: winston.format.combine(
             winston.format.timestamp(),
             winston.format.logstash(),
-            // winston.format.ms(),
-            // winston.format.colorize({
-            //   all: true,
-            //   colors: { info: 'blue', warning: 'yellow', error: 'red' },
-            // }),
           ),
         }),
         new winston.transports.File({

@@ -3,6 +3,35 @@ import { Role } from './role.entity';
 import { RolesController } from './roles.controller';
 import { RolesService } from './roles.service';
 import { RoleDto } from './role.dto';
+import { User } from 'src/users/user.entity';
+import exp from 'constants';
+
+const fakeUsers: User[] = [
+  {
+    id: 'testId',
+    firstName: 'test1',
+    lastName: 'test1',
+    email: 'test1@email.com',
+    phone: 'testPhone',
+    password: 'test',
+  } as User,
+  {
+    id: 'testId',
+    firstName: 'test2',
+    lastName: 'test2',
+    email: 'test2@email.com',
+    phone: 'testPhone',
+    password: 'test',
+  } as User,
+  {
+    id: 'testId',
+    firstName: 'test3',
+    lastName: 'test3',
+    email: 'test3@email.com',
+    phone: 'testPhone',
+    password: 'test',
+  } as User,
+];
 
 const testRoles: Role[] = [
   new Role('test1', 'Test Role 1'),
@@ -14,6 +43,9 @@ const testRole: Role = new Role('test', 'Test Role');
 
 const fakeRolesService = {
   find: jest.fn().mockResolvedValue(testRoles),
+  findUsers: jest
+    .fn()
+    .mockImplementation((role: string) => Promise.resolve(fakeUsers)),
   findById: jest
     .fn()
     .mockImplementation((id: string) => Promise.resolve(testRole)),
@@ -50,9 +82,43 @@ describe('RolesController', () => {
   });
 
   describe('getRoles', () => {
-    it('should get an array of roles', async () => {
+    it('should fetch all roles', async () => {
       const roles = await controller.getRoles();
       expect(roles).toEqual(testRoles);
+    });
+  });
+
+  describe('getUsers', () => {
+    it('should fetch all users with a certain role', async () => {
+      const users = await controller.getUsers('testRole');
+      expect(users).toEqual(fakeUsers);
+    });
+  });
+
+  describe('getRole', () => {
+    it('should fetch a single role', async () => {
+      const role = await controller.getRole('testId');
+      expect(role).toEqual(testRole);
+    });
+  });
+
+  describe('createRole', () => {
+    it('should create a new role', async () => {
+      const newRole = await controller.createRole(testRole);
+      expect(newRole).toEqual(testRole);
+    });
+  });
+
+  describe('editRole', () => {
+    it('should update a role', async () => {
+      const updatedRole = await controller.editRole('testId', testRole);
+      expect(updatedRole).toEqual(testRole);
+    });
+  });
+
+  describe('deleteRole', () => {
+    it('should delete a role', async () => {
+      expect(await controller.deleteRole('testId')).toEqual({ deleted: true });
     });
   });
 });
