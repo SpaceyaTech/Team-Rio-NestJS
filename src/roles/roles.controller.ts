@@ -21,10 +21,12 @@ import { RolesService } from './roles.service';
 @ApiTags('Roles')
 @Controller('roles')
 // @Roles(RoleTypes.ADMIN)
-// @UseGuards(RequireAuth, RolesGuard)
+@UseGuards(RequireAuth, RolesGuard)
 export class RolesController {
   constructor(
-    private service: RolesService, // @Inject(WINSTON_MODULE_NEST_PROVIDER) // private readonly logger: LoggerService,
+    private service: RolesService,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
   ) {}
 
   // GET roles

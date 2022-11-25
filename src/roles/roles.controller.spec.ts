@@ -4,7 +4,9 @@ import { RolesController } from './roles.controller';
 import { RolesService } from './roles.service';
 import { RoleDto } from './role.dto';
 import { User } from 'src/users/user.entity';
-import exp from 'constants';
+import { RequireAuth } from 'src/auth/guards/require-auth.guard';
+import { CanActivate } from '@nestjs/common';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 const fakeUsers: User[] = [
   {
@@ -69,8 +71,13 @@ describe('RolesController', () => {
   let controller: RolesController;
 
   beforeEach(async () => {
+    const fakeLogger = { log: jest.fn() };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [{ provide: RolesService, useValue: fakeRolesService }],
+      providers: [
+        { provide: RolesService, useValue: fakeRolesService },
+        { provide: WINSTON_MODULE_NEST_PROVIDER, useValue: fakeLogger },
+      ],
       controllers: [RolesController],
     }).compile();
 
