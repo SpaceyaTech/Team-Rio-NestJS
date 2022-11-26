@@ -11,7 +11,7 @@ import { CreateReactionDto } from './dtos/create-reaction.dto';
 import { EditReactionDto } from './dtos/edit-reaction.dto';
 import { Reaction, ReactionEnum } from './reaction.entity';
 
-type FindFilters = {
+export type FindFilters = {
   type: string;
   id: string;
 };

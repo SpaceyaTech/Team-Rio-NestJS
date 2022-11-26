@@ -86,7 +86,7 @@ export class ReactionsController {
   @Serialize(FetchReactionDto)
   @Post()
   @UseGuards(RequireAuth)
-  postReaction(
+  createReaction(
     @Body() body: CreateReactionDto,
     @CurrentUser() user: FetchUserDto,
   ) {
