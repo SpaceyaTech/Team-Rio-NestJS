@@ -9,7 +9,7 @@ import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { Repository } from 'typeorm';
 import { CreateReactionDto } from './dtos/create-reaction.dto';
 import { EditReactionDto } from './dtos/edit-reaction.dto';
-import { Reaction, ReactionType } from './reaction.entity';
+import { Reaction, ReactionEnum } from './reaction.entity';
 
 type FindFilters = {
   type: string;
@@ -37,28 +37,25 @@ export class ReactionsService {
     let total: number = 0;
     if (filters.type === ReactionFilterTypes.BLOG) {
       upVotes = await this.repo.count({
-        where: { blog: { id: filters.id }, type: ReactionType.UPVOTE },
+        where: { blog: { id: filters.id }, type: ReactionEnum.UPVOTE },
       });
       downVotes = await this.repo.count({
-        where: { blog: { id: filters.id }, type: ReactionType.DOWNVOTE },
+        where: { blog: { id: filters.id }, type: ReactionEnum.DOWNVOTE },
       });
-      total = await this.repo.count({ where: { blog: { id: filters.id } } });
     } else if (filters.type === ReactionFilterTypes.COMMENT) {
       upVotes = await this.repo.count({
-        where: { comment: { id: filters.id }, type: ReactionType.UPVOTE },
+        where: { comment: { id: filters.id }, type: ReactionEnum.UPVOTE },
       });
       downVotes = await this.repo.count({
-        where: { comment: { id: filters.id }, type: ReactionType.DOWNVOTE },
-      });
-      total = await this.repo.count({
-        where: { comment: { id: filters.id } },
+        where: { comment: { id: filters.id }, type: ReactionEnum.DOWNVOTE },
       });
     } else throw new InternalServerErrorException('Invalid reaction filter');
+    total = upVotes + downVotes;
     return { upVotes, downVotes, total };
   }
 
   async findById(id: string) {
-    const reaction = await this.repo.find({
+    const reaction = await this.repo.findOne({
       where: { id },
       relations: { blog: true, comment: true },
     });
@@ -72,16 +69,18 @@ export class ReactionsService {
     let newReaction: Partial<Reaction>;
     if (blogId && !commentId) {
       // check if user is reacting to a blog post
-      const [existingReaction] = await this.repo.find({
+      const existingReaction = await this.repo.findOne({
         where: { user: { id: user.id }, blog: { id: blogId } },
       });
       if (existingReaction)
         // check if the reaction exists
-        throw new BadRequestException('You have already reacted to this post');
+        throw new BadRequestException(
+          'You have already reacted to this blog post',
+        );
       newReaction = this.repo.create({ type, blog: { id: blogId }, user });
     } else if (commentId && !blogId) {
       // check if user is reacting to a comment
-      const [existingReaction] = await this.repo.find({
+      const existingReaction = await this.repo.findOne({
         where: { user: { id: user.id }, comment: { id: commentId } },
       });
       if (existingReaction)
@@ -107,7 +106,9 @@ export class ReactionsService {
     return this.repo.save(reaction);
   }
 
-  delete(id: string) {
-    return this.repo.delete({ id });
+  async delete(id: string) {
+    const reaction = await this.findById(id);
+    await this.repo.delete({ id });
+    return { deleted: true };
   }
 }

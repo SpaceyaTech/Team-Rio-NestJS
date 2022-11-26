@@ -29,17 +29,17 @@ export class BlogPost {
   author: User;
 
   @Column({ type: 'boolean', default: false, name: 'is_published' })
-  isPublished: boolean;
+  isPublished?: boolean;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt?: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @OneToMany(() => Comment, (comment) => comment.blog)
-  comments: Comment[];
+  comments?: Comment[];
 
   @OneToMany(() => Reaction, (reaction) => reaction.blog)
-  reactions: Reaction[];
+  reactions?: Reaction[];
 }

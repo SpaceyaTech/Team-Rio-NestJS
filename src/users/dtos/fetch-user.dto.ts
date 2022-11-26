@@ -23,12 +23,12 @@ export class FetchUserDto {
   phone: string;
 
   @Expose()
-  avatar: string;
+  avatar?: string;
 
   @Expose()
   @Type(() => FetchRoleDto)
-  role: Role;
+  role?: Role;
 
   @Expose()
-  accessToken: string;
+  accessToken?: string;
 }

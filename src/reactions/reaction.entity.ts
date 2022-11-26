@@ -10,10 +10,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-export enum ReactionType {
+export enum ReactionEnum {
   UPVOTE = 'upvote',
   DOWNVOTE = 'downvote',
 }
+
+export type ReactionType = ReactionEnum.UPVOTE | ReactionEnum.DOWNVOTE;
 
 @Entity({ name: 'reactions' })
 export class Reaction {
@@ -24,20 +26,34 @@ export class Reaction {
   // type: ReactionType;
 
   @Column()
-  type: string;
+  type: ReactionType;
 
   @ManyToOne(() => User, (user) => user.reactions)
   user: User;
 
   @ManyToOne(() => BlogPost, (blog) => blog.reactions)
-  blog: BlogPost;
+  blog?: BlogPost;
 
   @ManyToOne(() => Comment, (comment) => comment.reactions)
-  comment: Comment;
+  comment?: Comment;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  constructor(
+    id: string,
+    type: ReactionType,
+    user: User,
+    blog?: BlogPost,
+    comment?: Comment,
+  ) {
+    this.id = id;
+    this.type = type;
+    this.user = user;
+    this.blog = blog || null;
+    this.comment = comment || null;
+  }
 }

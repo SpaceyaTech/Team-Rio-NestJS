@@ -41,32 +41,32 @@ export class User {
   password: string;
 
   @Column({ default: 'https://bit.ly/3Wgeq06' })
-  avatar: string;
+  avatar?: string;
 
   @Column({ type: 'text', nullable: true })
-  bio: string;
+  bio?: string;
 
   // @Column({ type: 'enum', enum: AccountStatus, default: AccountStatus.ACTIVE })
   // accountStatus: AccountStatus;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt?: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
-  blogs: BlogPost[];
+  blogs?: BlogPost[];
 
   @ManyToOne(() => Role, (role) => role.users, { nullable: false })
-  role: Role;
+  role?: Role;
 
   @OneToMany(() => Comment, (comment) => comment.user)
-  comments: Comment[];
+  comments?: Comment[];
 
   @OneToMany(() => Reaction, (reaction) => reaction.user)
-  reactions: Reaction[];
+  reactions?: Reaction[];
 
   @OneToOne(() => RefreshToken, (token) => token.user)
-  tokens: RefreshToken;
+  tokens?: RefreshToken;
 }

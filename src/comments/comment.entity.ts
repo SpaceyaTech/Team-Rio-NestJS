@@ -20,13 +20,13 @@ export class Comment {
   content: string;
 
   @Column({ type: 'boolean', default: false })
-  edited: boolean;
+  edited?: boolean;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt?: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @ManyToOne(() => BlogPost, (blog) => blog.comments)
   blog: BlogPost;
@@ -35,5 +35,5 @@ export class Comment {
   user: User;
 
   @OneToMany(() => Reaction, (reaction) => reaction.comment)
-  reactions: Reaction;
+  reactions?: Reaction;
 }
