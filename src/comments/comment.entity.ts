@@ -28,12 +28,19 @@ export class Comment {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt?: Date;
 
-  @ManyToOne(() => BlogPost, (blog) => blog.comments)
+  @ManyToOne(() => BlogPost, (blog) => blog.comments, { onDelete: 'CASCADE' })
   blog: BlogPost;
 
-  @ManyToOne(() => User, (user) => user.comments)
+  @ManyToOne(() => User, (user) => user.comments, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToMany(() => Reaction, (reaction) => reaction.comment)
   reactions?: Reaction;
+
+  constructor(id: string, content: string, blog?: BlogPost, user?: User) {
+    this.id = id;
+    this.content = content;
+    this.blog = blog || null;
+    this.user = user || null;
+  }
 }

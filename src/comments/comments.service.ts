@@ -45,7 +45,9 @@ export class CommentsService {
     return this.repo.save(comment);
   }
 
-  delete(id: string) {
-    return this.repo.delete({ id });
+  async delete(id: string) {
+    const comment = await this.findById(id);
+    await this.repo.delete({ id });
+    return { deleted: true };
   }
 }
