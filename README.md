@@ -15,7 +15,7 @@
 
 ## Description
 
-SpaceYaTech backend implemented using NestJS framework
+SpaceYaTech backend implemented using NestJS framework. [NestJS](https://nestjs.com/) is a progressive Node.js framework for building efficient, reliable and scalable server-side applications.
 
 ## Overview
 
