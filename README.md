@@ -12,9 +12,14 @@ SpaceYaTech backend implemented using NestJS framework
 - [Team Rio NestJs Backend](#team-rio-nestjs-backend)
   - [Description](#description)
   - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
   - [Installation](#installation)
   - [Running the app](#running-the-app)
   - [Test](#test)
+
+## Overview
+
+The SpaceYaTech Content Management system is an open-application that lets users to quickly publish content and share it with ease to their audience. Inspired by existing CMSes like Hashnode, Wordpress, DEV and Joomla, we felt the need to create an African CMS created by young Africans looking to learn by contributing to Open Source. SpaceYaTech opted for a CMS as the debut open source project because of the technicalities involved in creating, maintaining and scaling a CMS. A CMS poses great technical challenges and a great learning opportunity for those looking to grow their tech skills. For a more detailed overview of the project, read through the [CMS Backend wiki](https://github.com/SpaceyaTech/CMS-Backend-Repository/wiki/Technical-Description-Of-Product)
 
 ## Installation
 
