@@ -41,6 +41,16 @@ export class CommentsController {
     return this.service.findById(id);
   }
 
+  // GET blog comments count
+  @ApiOperation({
+    summary: 'Get blog comments count',
+    description: 'Fetch the number of comments a blog has',
+  })
+  @Get(':blogId')
+  getBlogCommentsCount(@Param('blogId') blogId: string) {
+    return this.service.countByBlog(blogId);
+  }
+
   // POST a comment
   @ApiOperation({
     summary: 'Post a comment',
