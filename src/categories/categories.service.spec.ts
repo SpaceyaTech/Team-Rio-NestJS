@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CategoriesService } from './categories.service';
 
+const fakeRepository = {};
+
 describe('CategoriesService', () => {
   let service: CategoriesService;
 

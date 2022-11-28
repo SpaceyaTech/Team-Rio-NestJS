@@ -5,11 +5,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Category } from 'src/categories/category.entity';
 
 @Entity({ name: 'blog_posts' })
 export class BlogPost {
@@ -27,6 +30,10 @@ export class BlogPost {
 
   @ManyToOne(() => User, (user) => user.blogs)
   author: User;
+
+  @ManyToMany(() => Category, (category) => category.blogPosts)
+  @JoinColumn()
+  categories?: Category[];
 
   @Column({ type: 'boolean', default: false, name: 'is_published' })
   isPublished?: boolean;
