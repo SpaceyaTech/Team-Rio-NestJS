@@ -1,4 +1,4 @@
-import { BlogPost } from 'src/blogs/blog.entity';
+import { BlogPost } from '../blogs/blog.entity';
 import {
   CreateDateColumn,
   Entity,
@@ -13,11 +13,16 @@ export class Category {
   name: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt?: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @ManyToMany(() => BlogPost, (blogPost) => blogPost.categories)
-  blogPosts: BlogPost[];
+  blogPosts?: BlogPost[];
+
+  constructor(name: string, blogPosts?: BlogPost[]) {
+    this.name = name;
+    this.blogPosts = blogPosts;
+  }
 }

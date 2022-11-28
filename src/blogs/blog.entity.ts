@@ -12,7 +12,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Category } from 'src/categories/category.entity';
+import { Category } from '../categories/category.entity';
 
 @Entity({ name: 'blog_posts' })
 export class BlogPost {
