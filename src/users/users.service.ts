@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RoleTypes } from '../roles/role.entity';
+import { RolesEnum } from '../roles/role.entity';
 import { RolesService } from '../roles/roles.service';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -17,7 +17,10 @@ export class UsersService {
   ) {}
 
   async findById(id: string) {
-    const user = await this.repo.findOneBy({ id });
+    const user = await this.repo.findOne({
+      where: { id },
+      relations: { roles: true },
+    });
     if (!user) throw new NotFoundException('User not found');
     return user;
   }
@@ -25,13 +28,9 @@ export class UsersService {
   async findOneBy(filters?: Partial<User> | null) {
     const [user] = await this.repo.find({
       where: filters,
-      relations: { role: true },
+      relations: { roles: true },
     });
     return user;
-  }
-
-  async findByRole(roleId: string) {
-    return this.repo.find({ where: { role: { id: roleId } } });
   }
 
   async findByEmail(email: string) {
@@ -47,21 +46,40 @@ export class UsersService {
     const existingUserEmail = await this.findByEmail(user.email);
     if (existingUserEmail)
       throw new BadRequestException('User with that email already exists');
-    let role = await this.rolesService.findOneBy({ name: RoleTypes.USER });
-    if (!role) {
-      await this.rolesService.create({ name: RoleTypes.USER });
-      // by default a new user will have a user role
-      role = await this.rolesService.findOneBy({ name: RoleTypes.USER });
+    let userRole = await this.rolesService.findOneBy({ name: RolesEnum.USER });
+    if (!userRole) {
+      userRole = await this.rolesService.create({ name: RolesEnum.USER });
     }
-    user.role = role;
+    user.roles.push(userRole);
     const newUser = this.repo.create(user);
     return this.repo.save(newUser);
   }
 
-  async changeRole(id: string, role: string) {
-    const user = await this.findById(id);
-    const newRole = await this.rolesService.findOneBy({ name: role });
-    user.role = newRole;
+  async addRole(userId: string, roleName: string) {
+    const user = await this.findById(userId);
+    const role = await this.rolesService.findOneBy({ name: roleName });
+    const existingRole = user.roles.find(
+      (userRole) => userRole.name === role.name,
+    );
+    if (existingRole)
+      throw new BadRequestException(
+        `User already has ${role.name} privilleges`,
+      );
+    user.roles.push(role);
+    return this.repo.save(user);
+  }
+
+  async removeRole(userId: string, roleName: string) {
+    const user = await this.findById(userId);
+    const role = await this.rolesService.findOneBy({ name: roleName });
+    const existingRole = user.roles.find(
+      (userRole) => userRole.name === role.name,
+    );
+    if (!existingRole)
+      throw new BadRequestException(
+        `User does not have ${role.name} privilleges`,
+      );
+    user.roles = user.roles.filter((userRole) => userRole.name !== role.name);
     return this.repo.save(user);
   }
 

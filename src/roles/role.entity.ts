@@ -3,15 +3,16 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-export enum RoleTypes {
-  USER = 'user',
-  MODERATOR = 'moderator',
-  ADMIN = 'admin',
+export enum RolesEnum {
+  USER = 'USER',
+  MODERATOR = 'MODERATOR',
+  ADMIN = 'ADMIN',
 }
 
 @Entity()
@@ -28,7 +29,7 @@ export class Role {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => User, (user) => user.role)
+  @ManyToMany(() => User, (user) => user.roles)
   users: User[];
 
   constructor(id: string, name: string) {

@@ -32,18 +32,6 @@ export class UsersController {
     return this.service.find();
   }
 
-  // GET users with a particular role
-  @ApiOperation({
-    summary: 'Get users with a particular role',
-    description:
-      'Fetch a lost of users with a particular role. For example,\
-       fetching all the admin users in the database',
-  })
-  @Get('/role')
-  getUsersRole(@Query('roleId') roleId: string) {
-    return this.service.findByRole(roleId);
-  }
-
   // GET a user
   @ApiOperation({
     summary: 'Get a single user',

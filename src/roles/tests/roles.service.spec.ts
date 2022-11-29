@@ -44,15 +44,21 @@ describe('RolesService', () => {
     expect(service).toBeDefined();
   });
 
+  it('should have a repository', () => {
+    expect(repository).toBeDefined();
+  });
+
   describe('find', () => {
-    it('should return an array of roles', async () => {
+    it('should fetch a list of roles', async () => {
+      const repoSpy = jest.spyOn(repository, 'find');
       const roles = await service.find();
       expect(roles).toStrictEqual(testRoles);
+      expect(repoSpy).toBeCalledWith();
     });
   });
 
   describe('findById', () => {
-    it('should return a single role', async () => {
+    it('should fetch a single role', async () => {
       const repoSpy = jest.spyOn(repository, 'findOneBy');
       expect(service.findById('test')).resolves.toEqual(testRole);
       expect(repoSpy).toBeCalledWith({ id: 'test' });
@@ -68,10 +74,10 @@ describe('RolesService', () => {
 
   describe('findOneBy', () => {
     it('should return a single role based on a filter', async () => {
-      const roleSpy = jest.spyOn(repository, 'findOne');
+      const repoSpy = jest.spyOn(repository, 'findOne');
       const role = await service.findOneBy({ name: 'Test Role' });
       expect(role).toEqual(testRole);
-      expect(roleSpy).toBeCalledWith({ where: { name: 'Test Role' } });
+      expect(repoSpy).toBeCalledWith({ where: { name: 'Test Role' } });
     });
 
     it('should return null if role was not found', async () => {

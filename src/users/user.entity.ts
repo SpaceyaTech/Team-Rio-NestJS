@@ -7,6 +7,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -58,8 +60,9 @@ export class User {
   @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
   blogs?: BlogPost[];
 
-  @ManyToOne(() => Role, (role) => role.users, { nullable: false })
-  role?: Role;
+  @ManyToMany(() => Role, (role) => role.users)
+  @JoinColumn()
+  roles?: Role[];
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comments?: Comment[];
