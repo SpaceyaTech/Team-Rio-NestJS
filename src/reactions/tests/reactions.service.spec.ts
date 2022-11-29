@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { BlogPost } from 'src/blogs/blog.entity';
-import { Comment } from 'src/comments/comment.entity';
-import { User } from 'src/users/user.entity';
+import { BlogPost } from '../../blogs/blog.entity';
+import { Comment } from '../../comments/comment.entity';
+import { User } from '../../users/user.entity';
 import { Repository } from 'typeorm';
-import { Reaction, ReactionEnum } from './reaction.entity';
-import { ReactionsService } from './reactions.service';
+import { Reaction, ReactionEnum } from '../reaction.entity';
+import { ReactionsService } from '../reactions.service';
 
 const fakeUser1: User = {
   id: 'testId1',

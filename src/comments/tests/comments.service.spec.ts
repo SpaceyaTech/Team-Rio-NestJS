@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { BlogsService } from '../blogs/blogs.service';
+import { BlogsService } from '../../blogs/blogs.service';
 import { Repository } from 'typeorm';
-import { Comment } from './comment.entity';
-import { CommentsService } from './comments.service';
-import { BlogPost } from '../blogs/blog.entity';
-import { User } from '../users/user.entity';
+import { Comment } from '../comment.entity';
+import { CommentsService } from '../comments.service';
+import { BlogPost } from '../../blogs/blog.entity';
+import { User } from '../../users/user.entity';
 
 const fakeComment: Comment = new Comment('testId', 'test');
 

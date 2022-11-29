@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { User } from '../users/user.entity';
-import { EditReactionDto } from './dtos/edit-reaction.dto';
-import { Reaction, ReactionEnum } from './reaction.entity';
-import { ReactionsController } from './reactions.controller';
-import { ReactionsService } from './reactions.service';
+import { User } from '../../users/user.entity';
+import { EditReactionDto } from '../dtos/edit-reaction.dto';
+import { Reaction, ReactionEnum } from '../reaction.entity';
+import { ReactionsController } from '../reactions.controller';
+import { ReactionsService } from '../reactions.service';
 
 const fakeUser: User = {
   id: 'testId1',

@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { textToTitle } from '../utils/text-to-title.util';
+import { textToTitle } from '../utils';
 import { Repository } from 'typeorm';
 import { Category } from './category.entity';
 

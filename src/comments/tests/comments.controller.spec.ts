@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CommentsController } from './comments.controller';
-import { CommentsService } from './comments.service';
-import { Comment } from './comment.entity';
-import { CreateCommentDto } from './dtos/create-comment.dto';
-import { User } from '../users/user.entity';
+import { CommentsController } from '../comments.controller';
+import { CommentsService } from '../comments.service';
+import { Comment } from '../comment.entity';
+import { CreateCommentDto } from '../dtos/create-comment.dto';
+import { User } from '../../users/user.entity';
 
 const fakeUser: User = new User();
 
