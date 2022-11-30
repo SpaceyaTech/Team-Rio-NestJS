@@ -6,11 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-<<<<<<< Updated upstream
-import { Role } from './role.entity';
-=======
 import { Role, RolesEnum } from './role.entity';
->>>>>>> Stashed changes
 
 @Injectable()
 export class RolesService implements OnModuleInit {
