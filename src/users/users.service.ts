@@ -2,18 +2,23 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  OnModuleInit,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RolesEnum } from '../roles/role.entity';
+import { Role, RolesEnum } from '../roles/role.entity';
 import { RolesService } from '../roles/roles.service';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { ConfigService } from '@nestjs/config';
+import { AdminConfig } from '../../config';
+const bcrypt = require('bcrypt');
 
 @Injectable()
-export class UsersService {
+export class UsersService implements OnModuleInit {
   constructor(
     @InjectRepository(User) private repo: Repository<User>,
     private rolesService: RolesService,
+    private readonly configService: ConfigService,
   ) {}
 
   async findById(id: string) {
@@ -46,11 +51,13 @@ export class UsersService {
     const existingUserEmail = await this.findByEmail(user.email);
     if (existingUserEmail)
       throw new BadRequestException('User with that email already exists');
-    let userRole = await this.rolesService.findOneBy({ name: RolesEnum.USER });
-    if (!userRole) {
-      userRole = await this.rolesService.create({ name: RolesEnum.USER });
+    if (!user.roles.length) {
+      const userRole = await this.rolesService.findOneBy({
+        name: RolesEnum.USER,
+      });
+      user.roles.push(userRole);
     }
-    user.roles.push(userRole);
+    user.password = bcrypt.hashSync(user.password, 10); // hash a user's password
     const newUser = this.repo.create(user);
     return this.repo.save(newUser);
   }
@@ -91,5 +98,26 @@ export class UsersService {
 
   delete(id: string) {
     return this.repo.delete({ id });
+  }
+
+  // called once the host modules have been initialized
+  async onModuleInit(): Promise<void> {
+    const adminCredentials = this.configService.get<AdminConfig>('auth.admin');
+    const adminRole = await this.rolesService.findOneBy({
+      name: 'admin',
+    });
+    if (!adminRole) {
+      console.log('No admin role');
+      return;
+    }
+    const roles: Role[] = [adminRole];
+    const adminUser: User = { ...adminCredentials, roles };
+
+    const existingUser = await this.findByEmail(adminUser.email);
+
+    if (!existingUser) {
+      await this.create(adminUser);
+      console.log('Created admin user');
+    }
   }
 }

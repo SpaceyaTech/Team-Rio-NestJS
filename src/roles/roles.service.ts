@@ -2,13 +2,18 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  OnModuleInit,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+<<<<<<< Updated upstream
 import { Role } from './role.entity';
+=======
+import { Role, RolesEnum } from './role.entity';
+>>>>>>> Stashed changes
 
 @Injectable()
-export class RolesService {
+export class RolesService implements OnModuleInit {
   constructor(@InjectRepository(Role) private repo: Repository<Role>) {}
 
   find() {
@@ -52,5 +57,16 @@ export class RolesService {
     const role = await this.findById(id);
     await this.repo.delete({ id });
     return { deleted: true };
+  }
+
+  async onModuleInit() {
+    Object.values(RolesEnum).forEach(async (roleName) => {
+      const existingRole = await this.findOneBy({ name: roleName });
+      if (!existingRole) {
+        console.log(existingRole);
+        const newRole = await this.create({ name: roleName });
+        console.log(`Created ${newRole.name} role.`);
+      }
+    });
   }
 }

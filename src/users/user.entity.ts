@@ -25,7 +25,7 @@ enum AccountStatus {
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
   @Column({ name: 'first_name' })
   firstName: string;

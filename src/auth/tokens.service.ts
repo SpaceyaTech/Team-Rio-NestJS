@@ -12,7 +12,13 @@ import { LoginDto } from './dtos/login.dto';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
 import { AuthConfig } from '../../config';
+import { Role } from '../roles/role.entity';
 const jwt = require('jsonwebtoken');
+
+interface JwtPayload {
+  id: string;
+  roles: Role[];
+}
 
 @Injectable()
 export class TokensService {
@@ -42,7 +48,8 @@ export class TokensService {
     if (!passwordIsValid) {
       throw new BadRequestException('Invalid email/password');
     }
-    const accessToken = jwt.sign({ id: user.id }, this.authConfig.jwtSecret, {
+    const payload: JwtPayload = { id: user.id, roles: user.roles };
+    const accessToken = jwt.sign(payload, this.authConfig.jwtSecret, {
       expiresIn: this.authConfig.jwtExpire, // expire after 30 seconds
     });
     const refreshToken = await this.createToken(user.id);
@@ -60,20 +67,20 @@ export class TokensService {
         'Refresh token is expired, please login again',
       );
     }
-    const accessToken = jwt.sign(
-      { id: refreshToken.user.id },
-      this.authConfig.jwtSecret,
-      {
-        expiresIn: this.authConfig.jwtExpire, // expire after 30 seconds
-      },
-    );
+    const payload: JwtPayload = {
+      id: refreshToken.user.id,
+      roles: refreshToken.user.roles,
+    };
+    const accessToken = jwt.sign(payload, this.authConfig.jwtSecret, {
+      expiresIn: this.authConfig.jwtExpire, // expire after 30 seconds
+    });
     return { accessToken };
   }
 
   async findOne(token: string) {
     const refreshToken = await this.tokensRepository.findOne({
       where: { token },
-      relations: { user: true },
+      relations: { user: { roles: true } },
     });
     if (!refreshToken) throw new BadRequestException('Invalid token');
     return refreshToken;

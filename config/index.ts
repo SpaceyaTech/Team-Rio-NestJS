@@ -8,10 +8,19 @@ export interface DbConfig {
   autoLoadEntities: boolean;
 }
 
+export interface AdminConfig {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+}
+
 export interface AuthConfig {
   jwtSecret: string;
   jwtExpire: number;
   jwtRefreshExpire: number;
+  admin: AdminConfig;
 }
 
 export interface Config {

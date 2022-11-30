@@ -9,5 +9,13 @@ export default {
     jwtSecret: process.env.JWT_SECRET,
     jwtExpire: 60, // expires after 60 seconds
     jwtRefreshExpire: 60 * 60 * 24 * 1, // expires after a day
+
+    admin: {
+      firstName: process.env.FIRST_NAME,
+      lastName: process.env.LAST_NAME,
+      email: process.env.ADMIN_EMAIL,
+      phone: process.env.ADMIN_PHONE,
+      password: process.env.ADMIN_PASSWORD,
+    },
   },
 };

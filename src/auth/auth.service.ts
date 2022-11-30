@@ -17,7 +17,6 @@ export class AuthService {
   }
 
   signup(user: CreateUserDto) {
-    user.password = bcrypt.hashSync(user.password, 10);
     return this.usersService.create(user);
   }
 

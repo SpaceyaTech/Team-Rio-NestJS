@@ -41,10 +41,10 @@ const { db } = config();
       ignoreEnvFile: true, // we will load our own custom config file
       load: [config], // load custom config file
     }),
-    BlogsModule,
-    UsersModule,
-    AuthModule,
     RolesModule,
+    UsersModule,
+    BlogsModule,
+    AuthModule,
     CommentsModule,
     ReactionsModule,
     CategoriesModule,

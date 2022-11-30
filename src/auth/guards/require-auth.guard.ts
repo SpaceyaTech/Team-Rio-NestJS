@@ -15,14 +15,14 @@ export class RequireAuth implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
+    // session authentication
     const req: Request = context.switchToHttp().getRequest();
-
     if (req.isAuthenticated()) {
       return true;
     }
 
+    // jwt authentication
     let token: any = req.headers['authorization'];
-
     if (!token) return false;
 
     token = token.split(' ');

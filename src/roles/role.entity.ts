@@ -18,19 +18,19 @@ export enum RolesEnum {
 @Entity()
 export class Role {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
   @Column({ type: 'varchar', unique: true })
   name: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt?: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @ManyToMany(() => User, (user) => user.roles)
-  users: User[];
+  users?: User[];
 
   constructor(id: string, name: string) {
     this.id = id;
