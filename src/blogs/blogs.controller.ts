@@ -13,7 +13,7 @@ import {
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { RequireAuth } from '../auth/guards/require-auth.guard';
 import { CurrentUser } from '../decorators/current-user.decorator';
-import { PageOptionsDto } from '../dtos/page.dto';
+import { PageDto, PageOptionsDto } from '../dtos/page.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { BlogsService } from './blogs.service';
@@ -22,6 +22,7 @@ import { EditBlogDto } from './dtos/edit-blog.dto';
 import { FetchBlogDto } from './dtos/fetch-blog.dto';
 
 @ApiTags('Blogs')
+@Serialize(FetchBlogDto)
 @Controller('blogs')
 export class BlogsController {
   constructor(private service: BlogsService) {}
@@ -43,7 +44,6 @@ export class BlogsController {
       "Fetch a single blog by it's ID. If blog does\
       not exist it returns a 404 error",
   })
-  @Serialize(FetchBlogDto)
   @Get(':id')
   getBlog(@Param('id') id: string) {
     return this.service.findById(id);
@@ -61,7 +61,6 @@ export class BlogsController {
     type: CreateBlogDto,
     description: 'Create blog post structure',
   })
-  @Serialize(FetchBlogDto)
   @Post()
   @UseGuards(RequireAuth)
   createBlog(@Body() body: any, @CurrentUser() user: FetchUserDto) {
@@ -78,7 +77,6 @@ export class BlogsController {
     type: EditBlogDto,
     description: 'Edit blog post structure',
   })
-  @Serialize(FetchBlogDto)
   @Patch(':id')
   @UseGuards(RequireAuth)
   editBlog(@Param('id') id: string, @Body() body: EditBlogDto) {
@@ -92,7 +90,6 @@ export class BlogsController {
       'Once a user finishes writing and proofreading a blog post they\
        can publish it for the world to see their amazing work',
   })
-  @Serialize(FetchBlogDto)
   @Patch(':id/publish')
   @UseGuards(RequireAuth)
   publishBlog(@Param('id') id: string) {

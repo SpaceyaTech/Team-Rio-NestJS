@@ -24,12 +24,22 @@ export class SerializeInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       map((data: any) => {
-        return plainToInstance(this.dto, data, {
+        if (!data?.data) {
+          return plainToInstance(this.dto, data, {
+            strategy: 'excludeAll',
+            excludeExtraneousValues: true, // removes values not tagged with Expose decorator
+            enableImplicitConversion: true, // enables us to use custom types
+            exposeUnsetFields: false, // remove undefined fields
+          });
+        }
+        const transformedData = plainToInstance(this.dto, data.data, {
           strategy: 'excludeAll',
           excludeExtraneousValues: true, // removes values not tagged with Expose decorator
           enableImplicitConversion: true, // enables us to use custom types
           exposeUnsetFields: false, // remove undefined fields
         });
+        data.data = transformedData;
+        return data;
       }),
     );
   }
