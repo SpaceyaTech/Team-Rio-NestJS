@@ -106,18 +106,16 @@ export class UsersService implements OnModuleInit {
     const existingUser = await this.findByEmail(adminCredentials.email);
 
     if (!existingUser) {
-      let adminRole = await this.rolesService.findOneBy({
-        name: RolesEnum.ADMIN,
-      });
-      if (!adminRole) {
-        try {
-          adminRole = await this.rolesService.create({ name: RolesEnum.ADMIN });
-        } catch (err) {
-          adminRole = await this.rolesService.findOneBy({
-            name: RolesEnum.ADMIN,
-          });
-        }
+      let adminRole: Role;
+
+      try {
+        adminRole = await this.rolesService.create({ name: RolesEnum.ADMIN });
+      } catch (err) {
+        adminRole = await this.rolesService.findOneBy({
+          name: RolesEnum.ADMIN,
+        });
       }
+
       let adminUser: User = { ...adminCredentials, roles: [adminRole] };
       adminUser = this.repo.create(adminUser);
       await this.repo.save(adminUser);
