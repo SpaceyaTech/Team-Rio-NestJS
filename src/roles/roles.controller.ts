@@ -13,14 +13,17 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { Roles } from '../decorators/roles.decorator';
 import { RequireAuth } from '../auth/guards/require-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { RoleDto } from './role.dto';
+import { RolesEnum } from './role.entity';
 import { RolesService } from './roles.service';
 
 @ApiTags('Roles')
 @Controller('roles')
-// @Roles(RoleTypes.ADMIN)
+@UseGuards(RequireAuth)
+@Roles(RolesEnum.ADMIN)
 @UseGuards(RequireAuth, RolesGuard)
 export class RolesController {
   constructor(

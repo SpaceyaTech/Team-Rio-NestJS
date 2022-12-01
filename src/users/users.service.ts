@@ -51,11 +51,11 @@ export class UsersService implements OnModuleInit {
     const existingUserEmail = await this.findByEmail(user.email);
     if (existingUserEmail)
       throw new BadRequestException('User with that email already exists');
-    if (!user.roles.length) {
+    if (!user.roles?.length) {
       const userRole = await this.rolesService.findOneBy({
         name: RolesEnum.USER,
       });
-      user.roles.push(userRole);
+      user.roles = [userRole];
     }
     user.password = bcrypt.hashSync(user.password, 10); // hash a user's password
     const newUser = this.repo.create(user);
@@ -117,8 +117,7 @@ export class UsersService implements OnModuleInit {
       }
 
       let adminUser: User = { ...adminCredentials, roles: [adminRole] };
-      adminUser = this.repo.create(adminUser);
-      await this.repo.save(adminUser);
+      await this.create(adminUser);
       console.log(`Created ${RolesEnum.ADMIN} user`);
     }
   }

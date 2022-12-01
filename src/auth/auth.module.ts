@@ -8,12 +8,12 @@ import { JwtAuthController } from './jwt-auth.controller';
 import { SessionSerializer } from './passport/session.serializer';
 import { LocalStrategy } from './passport/strategies/local.strategy';
 import { RefreshToken } from './refresh-token.entity';
-import { TokensService } from './tokens.service';
+import { JwtAuthService } from './jwt-auth.service';
 
 @Module({
   exports: [AuthService],
   imports: [TypeOrmModule.forFeature([RefreshToken]), UsersModule, RolesModule],
   controllers: [AuthController, JwtAuthController],
-  providers: [AuthService, LocalStrategy, SessionSerializer, TokensService],
+  providers: [AuthService, LocalStrategy, SessionSerializer, JwtAuthService],
 })
 export class AuthModule {}
