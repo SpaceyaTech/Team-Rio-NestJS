@@ -103,21 +103,25 @@ export class UsersService implements OnModuleInit {
   // called once the host modules have been initialized
   async onModuleInit(): Promise<void> {
     const adminCredentials = this.configService.get<AdminConfig>('auth.admin');
-    const adminRole = await this.rolesService.findOneBy({
-      name: 'admin',
-    });
-    if (!adminRole) {
-      console.log('No admin role');
-      return;
-    }
-    const roles: Role[] = [adminRole];
-    const adminUser: User = { ...adminCredentials, roles };
-
-    const existingUser = await this.findByEmail(adminUser.email);
+    const existingUser = await this.findByEmail(adminCredentials.email);
 
     if (!existingUser) {
-      await this.create(adminUser);
-      console.log('Created admin user');
+      let adminRole = await this.rolesService.findOneBy({
+        name: RolesEnum.ADMIN,
+      });
+      if (!adminRole) {
+        try {
+          adminRole = await this.rolesService.create({ name: RolesEnum.ADMIN });
+        } catch (err) {
+          adminRole = await this.rolesService.findOneBy({
+            name: RolesEnum.ADMIN,
+          });
+        }
+      }
+      let adminUser: User = { ...adminCredentials, roles: [adminRole] };
+      adminUser = this.repo.create(adminUser);
+      await this.repo.save(adminUser);
+      console.log(`Created ${RolesEnum.ADMIN} user`);
     }
   }
 }

@@ -8,6 +8,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -16,7 +17,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-enum AccountStatus {
+export enum AccountStatusEnum {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
   BLOCKED = 'blocked',
@@ -61,7 +62,7 @@ export class User {
   blogs?: BlogPost[];
 
   @ManyToMany(() => Role, (role) => role.users)
-  @JoinColumn()
+  @JoinTable()
   roles?: Role[];
 
   @OneToMany(() => Comment, (comment) => comment.user)

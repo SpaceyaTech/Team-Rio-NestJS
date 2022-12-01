@@ -35,7 +35,6 @@ export class RolesService implements OnModuleInit {
   }
 
   async create(role: Partial<Role>) {
-    role.name = role.name.toLowerCase();
     const existingRole = await this.findOneBy({ name: role.name });
     if (existingRole) throw new BadRequestException('Role already exists');
     const newRole = this.repo.create(role);
@@ -59,7 +58,6 @@ export class RolesService implements OnModuleInit {
     Object.values(RolesEnum).forEach(async (roleName) => {
       const existingRole = await this.findOneBy({ name: roleName });
       if (!existingRole) {
-        console.log(existingRole);
         const newRole = await this.create({ name: roleName });
         console.log(`Created ${newRole.name} role.`);
       }
