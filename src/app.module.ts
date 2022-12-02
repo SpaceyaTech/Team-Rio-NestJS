@@ -12,6 +12,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { ConfigModule } from '@nestjs/config';
 import config from '../config';
 import { WinstonModule } from 'nest-winston';
+import { AccountsModule } from './accounts/accounts.module';
 import * as winston from 'winston';
 
 const { db } = config();
@@ -48,6 +49,7 @@ const { db } = config();
     CommentsModule,
     ReactionsModule,
     CategoriesModule,
+    AccountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
