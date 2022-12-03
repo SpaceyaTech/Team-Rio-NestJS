@@ -12,14 +12,17 @@ import { CategoriesModule } from './categories/categories.module';
 import { ConfigModule } from '@nestjs/config';
 import config from '../config';
 import { WinstonModule } from 'nest-winston';
-import { AccountsModule } from './accounts/accounts.module';
 import * as winston from 'winston';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 const { db } = config();
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(db),
+    PrometheusModule.register({
+      path: '/metrics',
+    }),
     WinstonModule.forRoot({
       transports: [
         new winston.transports.Console({
@@ -49,7 +52,6 @@ const { db } = config();
     CommentsModule,
     ReactionsModule,
     CategoriesModule,
-    AccountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
