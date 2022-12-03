@@ -14,6 +14,7 @@ import config from '../config';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 const { db } = config();
 
@@ -54,6 +55,9 @@ const { db } = config();
     CategoriesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: 'APP_INTERCEPTOR', useClass: LoggingInterceptor },
+  ],
 })
 export class AppModule {}
