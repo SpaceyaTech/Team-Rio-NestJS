@@ -13,6 +13,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../categories/category.entity';
+import { Account } from '../accounts/entities/account.entity';
 
 @Entity({ name: 'blog_posts' })
 export class BlogPost {
@@ -28,8 +29,8 @@ export class BlogPost {
   @Column('text')
   content: string;
 
-  @ManyToOne(() => User, (user) => user.blogs)
-  author: User;
+  @ManyToOne(() => Account, (account) => account.blogPosts)
+  account: Account;
 
   @ManyToMany(() => Category, (category) => category.blogPosts)
   @JoinColumn()

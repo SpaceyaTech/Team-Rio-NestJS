@@ -62,18 +62,9 @@ export class User {
   @OneToMany(() => Account, (account) => account.user)
   accounts?: Account[];
 
-  @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
-  blogs?: BlogPost[];
-
   @ManyToMany(() => Role, (role) => role.users)
   @JoinTable()
   roles?: Role[];
-
-  @OneToMany(() => Comment, (comment) => comment.user)
-  comments?: Comment[];
-
-  @OneToMany(() => Reaction, (reaction) => reaction.user)
-  reactions?: Reaction[];
 
   @OneToOne(() => RefreshToken, (token) => token.user)
   tokens?: RefreshToken;

@@ -3,10 +3,14 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/user.entity';
+import { BlogPost } from '../../blogs/blog.entity';
+import { Comment } from '../../comments/comment.entity';
+import { Reaction } from '../../reactions/reaction.entity';
 
 @Entity({ name: 'users_accounts' })
 export class Account {
@@ -30,4 +34,13 @@ export class Account {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToMany(() => BlogPost, (blog) => blog.account)
+  blogPosts: BlogPost[];
+
+  @OneToMany(() => Comment, (comment) => comment.account)
+  comments: Comment[];
+
+  @OneToMany(() => Reaction, (reaction) => reaction.account)
+  reactions: Reaction[];
 }

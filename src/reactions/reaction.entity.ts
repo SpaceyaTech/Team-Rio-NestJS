@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Account } from '../accounts/entities/account.entity';
 
 export enum ReactionEnum {
   UPVOTE = 'upvote',
@@ -28,8 +29,8 @@ export class Reaction {
   @Column()
   type: ReactionType;
 
-  @ManyToOne(() => User, (user) => user.reactions)
-  user: User;
+  @ManyToOne(() => Account, (account) => account.reactions)
+  account: Account;
 
   @ManyToOne(() => BlogPost, (blog) => blog.reactions)
   blog?: BlogPost;
@@ -46,13 +47,13 @@ export class Reaction {
   constructor(
     id: string,
     type: ReactionType,
-    user: User,
+    account?: Account,
     blog?: BlogPost,
     comment?: Comment,
   ) {
     this.id = id;
     this.type = type;
-    this.user = user;
+    this.account = account || null;
     this.blog = blog || null;
     this.comment = comment || null;
   }

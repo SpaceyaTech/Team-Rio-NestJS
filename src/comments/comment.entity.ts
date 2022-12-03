@@ -10,6 +10,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Account } from 'src/accounts/entities/account.entity';
 
 @Entity({ name: 'comments' })
 export class Comment {
@@ -31,16 +32,18 @@ export class Comment {
   @ManyToOne(() => BlogPost, (blog) => blog.comments, { onDelete: 'CASCADE' })
   blog: BlogPost;
 
-  @ManyToOne(() => User, (user) => user.comments, { onDelete: 'CASCADE' })
-  user: User;
+  @ManyToOne(() => Account, (account) => account.comments, {
+    onDelete: 'CASCADE',
+  })
+  account: Account;
 
   @OneToMany(() => Reaction, (reaction) => reaction.comment)
   reactions?: Reaction;
 
-  constructor(id: string, content: string, blog?: BlogPost, user?: User) {
+  constructor(id: string, content: string, blog?: BlogPost, account?: Account) {
     this.id = id;
     this.content = content;
     this.blog = blog || null;
-    this.user = user || null;
+    this.account = account || null;
   }
 }
