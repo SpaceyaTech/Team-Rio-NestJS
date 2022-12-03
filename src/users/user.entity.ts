@@ -16,6 +16,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Account } from '../accounts/entities/account.entity';
 
 export enum AccountStatusEnum {
   ACTIVE = 'active',
@@ -57,6 +58,9 @@ export class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt?: Date;
+
+  @OneToMany(() => Account, (account) => account.user)
+  accounts?: Account[];
 
   @OneToMany(() => BlogPost, (blogPost) => blogPost.author)
   blogs?: BlogPost[];
