@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RequireAuth } from '../auth/guards/require-auth.guard';
-import { CurrentUser } from '../decorators/current-user.decorator';
-import { Serialize } from '../interceptors/serialize.interceptor';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { CreateReactionDto } from './dtos/create-reaction.dto';
 import { EditReactionDto } from './dtos/edit-reaction.dto';

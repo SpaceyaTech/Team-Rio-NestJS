@@ -12,9 +12,9 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { RequireAuth } from '../auth/guards/require-auth.guard';
-import { CurrentUser } from '../decorators/current-user.decorator';
-import { PageDto, PageOptionsDto } from '../dtos/page.dto';
-import { Serialize } from '../interceptors/serialize.interceptor';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { PageDto, PageOptionsDto } from '../common/dtos/page.dto';
+import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dtos/create-blog.dto';

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RequireAuth } from '../auth/guards/require-auth.guard';
-import { CurrentUser } from '../decorators/current-user.decorator';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dtos/create-comment.dto';

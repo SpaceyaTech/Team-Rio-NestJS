@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RolesGuard } from '../guards/roles.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { EditUserDto } from './dtos/edit-user.dto';
 import { UsersService } from './users.service';

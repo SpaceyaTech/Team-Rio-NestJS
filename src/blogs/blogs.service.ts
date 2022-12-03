@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PageDto, PageMetaDto, PageOptionsDto } from '../dtos/page.dto';
+import { PageDto, PageMetaDto, PageOptionsDto } from '../common/dtos/page.dto';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { Repository } from 'typeorm';
