@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { BlogsModule } from './blogs/blogs.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
@@ -54,10 +52,6 @@ const { db } = config();
     ReactionsModule,
     CategoriesModule,
   ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    { provide: 'APP_INTERCEPTOR', useClass: LoggingInterceptor },
-  ],
+  providers: [{ provide: 'APP_INTERCEPTOR', useClass: LoggingInterceptor }],
 })
 export class AppModule {}
