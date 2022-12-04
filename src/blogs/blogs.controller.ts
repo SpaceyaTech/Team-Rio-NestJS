@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { RequireAuth } from '../auth/guards/require-auth.guard';
+import { RequireAuth } from '../common/guards/require-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { PageDto, PageOptionsDto } from '../common/dtos/page.dto';
 import { Serialize } from '../common/interceptors/serialize.interceptor';

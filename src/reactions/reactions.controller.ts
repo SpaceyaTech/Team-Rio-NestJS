@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { RequireAuth } from '../auth/guards/require-auth.guard';
+import { RequireAuth } from '../common/guards/require-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
 import { FetchUserDto } from '../users/dtos/fetch-user.dto';

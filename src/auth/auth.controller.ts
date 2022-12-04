@@ -16,7 +16,7 @@ import { FetchUserDto } from '../users/dtos/fetch-user.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
 import { LoginGuard } from './guards/login.guard';
-import { RequireAuth } from './guards/require-auth.guard';
+import { RequireAuth } from '../common/guards/require-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
