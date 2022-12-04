@@ -49,8 +49,8 @@ export class JwtAuthService {
       throw new BadRequestException('Invalid email/password');
     }
     const payload: JwtPayload = { id: user.id, roles: user.roles };
-    const accessToken = jwt.sign(payload, this.authConfig.jwtSecret, {
-      expiresIn: this.authConfig.jwtExpire, // expire after 30 seconds
+    const accessToken = jwt.sign(payload, this.authConfig.jwt.secret, {
+      expiresIn: this.authConfig.jwt.atExpires, // expire after 30 seconds
     });
     const refreshToken = await this.createToken(user.id);
     return { ...user, accessToken, refreshToken };
@@ -71,8 +71,8 @@ export class JwtAuthService {
       id: refreshToken.user.id,
       roles: refreshToken.user.roles,
     };
-    const accessToken = jwt.sign(payload, this.authConfig.jwtSecret, {
-      expiresIn: this.authConfig.jwtExpire, // expire after 30 seconds
+    const accessToken = jwt.sign(payload, this.authConfig.jwt.secret, {
+      expiresIn: this.authConfig.jwt.atExpires, // expire after 30 seconds
     });
     return { accessToken };
   }
@@ -100,9 +100,7 @@ export class JwtAuthService {
     }
 
     let _expires = new Date();
-    _expires.setSeconds(
-      _expires.getSeconds() + this.authConfig.jwtRefreshExpire,
-    );
+    _expires.setSeconds(_expires.getSeconds() + this.authConfig.jwt.rtExpires);
 
     const token = this.tokensRepository.create({
       token: uuid4(),

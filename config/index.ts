@@ -16,10 +16,14 @@ export interface AdminConfig {
   password: string;
 }
 
+export interface JwtAuthConfig {
+  secret: string;
+  atExpires: number;
+  rtExpires: number;
+}
+
 export interface AuthConfig {
-  jwtSecret: string;
-  jwtExpire: number;
-  jwtRefreshExpire: number;
+  jwt: JwtAuthConfig;
   admin: AdminConfig;
 }
 

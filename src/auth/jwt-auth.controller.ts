@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthConfig } from 'config';
+import { AuthConfig, JwtAuthConfig } from 'config';
 import { Response, Request } from 'express';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Serialize } from '../common/interceptors/serialize.interceptor';
@@ -28,7 +28,7 @@ export class JwtAuthController {
     const loginRes = await this.authService.login(body);
     res.cookie('refreshToken', loginRes.refreshToken, {
       httpOnly: true, // make the refresh token a HttpOnly cookie for security
-      maxAge: 1000 * this.authConfig.jwtRefreshExpire, // convert to milliseconds
+      maxAge: 1000 * this.authConfig.jwt.rtExpires, // convert to milliseconds
     });
     return loginRes;
   }

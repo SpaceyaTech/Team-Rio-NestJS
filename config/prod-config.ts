@@ -6,10 +6,11 @@ export default {
     autoLoadEntities: process.env.DB_AUTO_LOAD_ENTITIES as unknown as boolean,
   },
   auth: {
-    jwtSecret: process.env.JWT_SECRET,
-    jwtExpire: 60, // expires after 60 seconds
-    jwtRefreshExpire: 60 * 60 * 24 * 1, // expires after a day
-
+    jwt: {
+      secret: process.env.JWT_SECRET,
+      atExpires: 60, // expires after 60 seconds
+      rtExpires: 60 * 60 * 24 * 1, // expires after a day
+    },
     admin: {
       firstName: process.env.FIRST_NAME,
       lastName: process.env.LAST_NAME,

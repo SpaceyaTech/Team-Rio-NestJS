@@ -6,10 +6,11 @@ export default {
     autoLoadEntities: true,
   },
   auth: {
-    jwtSecret: '6gJi7^e941VD^m^q7SFBCOv&ZIxHL*94fvDO',
-    jwtExpire: 60 * 60 * 1, // expires after 30 seconds
-    jwtRefreshExpire: 60 * 60 * 24 * 1, // expires after a day
-
+    jwt: {
+      secret: '6gJi7^e941VD^m^q7SFBCOv&ZIxHL*94fvDO',
+      atExpires: 60 * 60 * 1, // expires after 30 seconds
+      rtExpires: 60 * 60 * 24 * 1, // expires after a day
+    },
     admin: {
       firstName: 'Ernest',
       lastName: 'Wambua',
