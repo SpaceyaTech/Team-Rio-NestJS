@@ -13,6 +13,7 @@ import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { ExceptionFilter } from './common';
 
 const { db } = config();
 
@@ -52,6 +53,9 @@ const { db } = config();
     ReactionsModule,
     CategoriesModule,
   ],
-  providers: [{ provide: 'APP_INTERCEPTOR', useClass: LoggingInterceptor }],
+  providers: [
+    { provide: 'APP_FILTER', useClass: ExceptionFilter },
+    { provide: 'APP_INTERCEPTOR', useClass: LoggingInterceptor },
+  ],
 })
 export class AppModule {}
