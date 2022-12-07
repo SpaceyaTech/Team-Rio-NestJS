@@ -1,7 +1,7 @@
 {
     "Servers": {
         "1": {
-            "Name": "SpaceYaTech Server",
+            "Name": "SpaceYaTech",
             "Group": "Servers",
             "Port": 5432,
             "Username": "postgres",

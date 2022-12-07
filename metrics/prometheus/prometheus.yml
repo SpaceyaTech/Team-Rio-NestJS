@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'my-server'
+
+rule_files:
+  - 'alert.rules'
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets:
+            - 'alertmanager:9093'
+
+scrape_configs:
+  - job_name: 'cms-backend'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['cms:5000']

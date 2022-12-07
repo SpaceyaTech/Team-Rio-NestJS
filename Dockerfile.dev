@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-ENTRYPOINT [ "npm", "start:dev" ]
+ENTRYPOINT [ "npm", "run", "start:dev" ]
