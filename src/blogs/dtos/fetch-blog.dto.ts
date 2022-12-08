@@ -23,6 +23,9 @@ export class FetchBlogDto {
   title: string;
 
   @Expose()
+  slug: string;
+
+  @Expose()
   description: string;
 
   @Expose()

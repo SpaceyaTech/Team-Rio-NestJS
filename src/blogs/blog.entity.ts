@@ -22,6 +22,9 @@ export class BlogPost {
   @Column()
   title: string;
 
+  @Column()
+  slug: string;
+
   @Column({ type: 'text', nullable: true })
   description: string;
 

@@ -5,6 +5,7 @@ import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 import { Repository } from 'typeorm';
 import { BlogPost } from './blog.entity';
+import slugify from 'slugify';
 
 @Injectable()
 export class BlogsService {
@@ -34,6 +35,7 @@ export class BlogsService {
   async create(blog: Partial<BlogPost>, user: Partial<User>) {
     const author = await this.usersService.findById(user.id);
     blog.author = author;
+    blog.slug = slugify(blog.title, { lower: true });
     const newBlog = this.repo.create(blog);
     return this.repo.save(newBlog);
   }
